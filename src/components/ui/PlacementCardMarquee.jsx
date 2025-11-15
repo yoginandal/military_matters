@@ -13,10 +13,10 @@ export default memo(function PlacementCardMarquee({ children }) {
         {children}
       </Marquee>
 
-      {/* <div className="pointer-events-none absolute inset-y-0 left-0 w-[5%] bg-gradient-to-r from-[#cfe1fc] z-10"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-[5%] bg-gradient-to-l from-[#cfe1fc] z-10"></div> */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-[5%] bg-gradient-to-r from-[#fff] z-10"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-[5%] bg-gradient-to-l from-[#fff] z-10"></div>
+      {/* <div className="pointer-events-none absolute inset-y-0 left-0 w-[5%] bg-linear-to-r from-[#cfe1fc] z-10"></div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-[5%] bg-linear-to-l from-[#cfe1fc] z-10"></div> */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-[5%] bg-linear-to-r from-[#fff] z-10"></div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-[5%] bg-linear-to-l from-[#fff] z-10"></div>
     </div>
   );
 });

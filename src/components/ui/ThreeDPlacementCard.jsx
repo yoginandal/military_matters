@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-"use client"
+"use client";
 
-import React, { useState, useRef, useEffect, memo, useCallback } from "react"
+import React, { useState, useRef, useEffect, memo, useCallback } from "react";
 
-import { Badge } from "@/components/ui/badge"
-import { Building2, ExternalLink } from "lucide-react"
+import { Badge } from "@/components/ui/badge";
+import { Building2, ExternalLink } from "lucide-react";
 
 export default memo(function ThreeDPlacementCard({
   image = "https://v0.dev/placeholder.svg?height=400&width=300",
@@ -14,36 +14,43 @@ export default memo(function ThreeDPlacementCard({
   featured = false,
   logo = "https://v0.dev/placeholder.svg?height=400&width=300",
 }) {
-  const cardRef = useRef(null)
-  const [transform, setTransform] = useState('')
-  const [glowPosition, setGlowPosition] = useState({ x: 0, y: 0 })
-  const [isHovered, setIsHovered] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
+  const cardRef = useRef(null);
+  const [transform, setTransform] = useState("");
+  const [glowPosition, setGlowPosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true)
-    return () => setIsMounted(false)
-  }, [])
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
 
-  const handleMouseMove = useCallback((e) => {
-    if (!cardRef.current || !isHovered) return
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (!cardRef.current || !isHovered) return;
 
-    const rect = cardRef.current.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
+      const rect = cardRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-    requestAnimationFrame(() => {
-      setTransform(
-        `perspective(1000px) rotateX(${y * -20}deg) rotateY(${x * 20}deg) scale3d(1.05, 1.05, 1.05)`
-      )
-      setGlowPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top })
-    })
-  }, [isHovered])
+      requestAnimationFrame(() => {
+        setTransform(
+          `perspective(1000px) rotateX(${y * -20}deg) rotateY(${
+            x * 20
+          }deg) scale3d(1.05, 1.05, 1.05)`
+        );
+        setGlowPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      });
+    },
+    [isHovered]
+  );
 
   const handleMouseLeave = useCallback(() => {
-    setIsHovered(false)
-    setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)')
-  }, [])
+    setIsHovered(false);
+    setTransform(
+      "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)"
+    );
+  }, []);
 
   return (
     <div
@@ -82,7 +89,7 @@ export default memo(function ThreeDPlacementCard({
             className="h-full w-full object-cover transform-gpu transition-transform duration-500 ease-out group-hover:scale-110"
             style={{ willChange: "transform" }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
         </div>
 
         {/* Content */}
