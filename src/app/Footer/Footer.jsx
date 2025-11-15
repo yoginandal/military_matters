@@ -1,19 +1,12 @@
 "use client";
 
-const logo = "/logo ssim.png";
-import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Linkedin,
-  Youtube,
-  Phone,
-} from "lucide-react";
+import { Facebook, Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-const aicteapprovals = "/pdfs/footer/SSIM-AICTE-EOA-1992-2023.pdf";
-// import { Input } from "@/components/ui/input";
+import Image from "next/image";
+
+const logo = "/logo.png";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -25,178 +18,149 @@ export default function Footer() {
 
   const footerSections = [
     {
-      label: "Useful Links",
+      label: "Platform",
       items: [
-        { name: "About Us", path: "/about/vision-mission" },
-        { name: "Rankings & Awards", path: "/about/accreditations-rankings" },
-        { name: "Accreditations", path: "/accreditations" },
-        { name: "Events", path: "/students-life/life-at-ssim" },
-        { name: "Media", path: "/students-life/news-announcements" },
-        { name: "Blog", path: "/blog" },
-        // { name: "Careers", path: "/careers" },
-        {
-          name: "AICTE Feedback",
-          path: "https://www.aicte-india.org/feedback/",
-        },
-        { name: "AICTE Approvals", path: aicteapprovals },
+        { name: "Home", path: "/" },
+        { name: "Blog & Briefings", path: "/blog" },
+        { name: "About", path: "/about" },
+        { name: "Contact HQ", path: "/contact-us" },
       ],
     },
     {
-      label: "Programs Offered",
+      label: "Domains",
       items: [
-        { name: "PGDM", path: "/programs/pgdm-triple-specialisation" },
-        { name: "PGDM - BIFS", path: "/programs/pgdm-bifs" },
-        { name: "PGDM - BA", path: "/programs/pgdm-ba" },
-        { name: "FPM", path: "/programs/fpm-efpm" },
-        { name: "EFPM", path: "/programs/fpm-efpm" },
+        { name: "Missiles & Artillery", path: "/blog?tab=missiles" },
+        { name: "Air Power", path: "/blog?tab=air-force" },
+        { name: "Sea Power", path: "/blog?tab=navy" },
+        { name: "Land Forces", path: "/blog?tab=army" },
+        { name: "Cyber & EW", path: "/blog?tab=electronic-warfare" },
       ],
     },
     {
-      label: "Committees",
+      label: "The Wire Room",
       items: [
-        {
-          name: "Grievance Redressal Mechanism",
-          path: "/grievance-redressal-mechanism",
-        },
-        { name: "Internal Complaints Committee", path: "/internal-complaints" },
+        { name: "Editorial Policy", path: "/editorial-policy" },
+        { name: "Research Approach", path: "/methodology" },
+        { name: "Submit a Tip", path: "/contact-us#tips" },
       ],
     },
     {
-      label: "S P Sampathys Siva Sivani Educational Society",
+      label: "Legal",
       items: [
-        { name: "Siva Sivani Institute of Management", path: "/" },
-        { name: "Siva Sivani Degree College", path: "https://ssdc.ac.in" },
-        { name: "Siva Sivani Junior College", path: "https://ssjc.ac.in" },
-        {
-          name: "Siva Sivani High School",
-          path: "https://www.spsschool.ac.in",
-        },
+        { name: "Privacy Policy", path: "/privacy-policy" },
+        { name: "Terms of Use", path: "/terms" },
       ],
     },
   ];
 
   return (
-    <footer className="relative bg-gradient-to-r from-blue-200 via-blue-50 to-blue-200 pt-16 pb-10 px-4 md:px-6 lg:px-8 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 1px 1px, black 1px, transparent 0)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-      </div>
+    <footer className="relative overflow-hidden border-t border-military-brown/40">
+      {/* Camo background image - same as header */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[url('/header_bg.jpg')] bg-cover bg-center"
+        aria-hidden="true"
+      />
 
-      <div className="container relative mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-8 gap-y-12">
-          {/* Logo and Social Section */}
-          <div className="lg:col-span-3 space-y-8">
-            <div className="space-y-6">
-              <Link
-                href="/"
-                className="flex items-center gap-3 group"
-                onClick={scrollToTop}
-              >
-                <img
-                  src={logo || "/placeholder.svg"}
-                  alt="SSIM Logo"
-                  className="h-14 sm:h-[72px] cursor-pointer w-auto transition-transform group-hover:scale-105"
-                />
-              </Link>
-              <div className="flex gap-3">
-                {[
-                  {
-                    icon: Facebook,
-                    bgColor: "bg-blue-600",
-                    label: "Facebook",
-                    href: "https://www.facebook.com/SivaSivaniInstituteofManagementHyderabad/",
-                  },
-                  {
-                    icon: Instagram,
-                    bgColor: "bg-pink-600",
-                    label: "Instagram",
-                    href: "https://www.instagram.com/ssim_b_school/?hl=en",
-                  },
-                  {
-                    icon: Twitter,
-                    bgColor: "bg-sky-500",
-                    label: "Twitter",
-                    href: "https://x.com/SSIMHyderabad",
-                  },
-                  {
-                    icon: Linkedin,
-                    bgColor: "bg-blue-700",
-                    label: "LinkedIn",
-                    href: "https://www.linkedin.com/school/siva-sivani-institute-of-management/",
-                  },
-                  {
-                    icon: Youtube,
-                    bgColor: "bg-red-600",
-                    label: "YouTube",
-                    href: "https://www.youtube.com/@sivasivaniinstituteofmanag3545",
-                  },
-                ].map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+      {/* Dark overlay for readability - same as header */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/70 via-black/80 to-black/90"
+        aria-hidden="true"
+      />
+
+      {/* Footer content */}
+      <div className="relative mx-auto max-w-7xl px-4 pt-12 pb-8 text-military-khaki sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-y-12 gap-x-10 md:grid-cols-2 lg:grid-cols-12 pb-8">
+          {/* Logo + mission + social */}
+          <div className="space-y-6 lg:col-span-4">
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="group inline-flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-black rounded"
+            >
+              <Image
+                src={logo}
+                alt="Military Matters 24/7"
+                width={56}
+                height={56}
+                className="h-12 w-auto cursor-pointer transition-transform group-hover:scale-105 sm:h-14"
+                priority
+              />
+              <span className="text-left text-xs font-semibold uppercase tracking-[0.22em] text-military-khaki">
+                Military Matters 24/7
+              </span>
+            </button>
+
+            <p className="max-w-md text-sm leading-relaxed text-military-khaki/90">
+              Indian defence news, strategy and veteran perspectives — focused
+              on clarity, capability and the realities of modern warfare.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              {[
+                {
+                  icon: Twitter,
+                  label: "Twitter / X",
+                  href: "#",
+                },
+                {
+                  icon: Instagram,
+                  label: "Instagram",
+                  href: "#",
+                },
+                {
+                  icon: Facebook,
+                  label: "Facebook",
+                  href: "#",
+                },
+                {
+                  icon: Linkedin,
+                  label: "LinkedIn",
+                  href: "#",
+                },
+                {
+                  icon: Youtube,
+                  label: "YouTube",
+                  href: "#",
+                },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-black rounded-full"
+                >
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="rounded-full border border-white/10 bg-white/10 backdrop-blur-sm text-military-khaki hover:bg-white/20 hover:text-white hover:border-white/20 transition-all hover:scale-110"
+                    aria-label={social.label}
                   >
-                    <Button
-                      size="icon"
-                      className={`rounded-full transition-all hover:scale-110 text-white ${social.bgColor} hover:opacity-90`}
-                      aria-label={social.label}
-                    >
-                      <social.icon className="h-5 w-5" />
-                    </Button>
-                  </a>
-                ))}
-              </div>
-            </div>
-            <div className="space-y-3">
-              <p className="text-sm text-black font-medium mb-3">
-                24/7 Women Helpline Number
-              </p>
-              <a href="tel:+919133305062">
-                <Button className="gap-2 bg-mainBlue text-white rounded-full hover:bg-mainBlue/80 hover:text-primary-foreground transition-colors">
-                  <Phone className="h-4 w-4" />
-                  91333 05062
-                </Button>
-              </a>
+                    <social.icon className="h-4 w-4" />
+                  </Button>
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Links Sections */}
-          <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Link sections */}
+          <div className="grid grid-cols-1 gap-8 md:col-span-1 md:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
             {footerSections.map((section) => (
-              <div key={section.label} className="space-y-6">
-                <h3 className="text-lg font-semibold text-mainBlue tracking-wide">
+              <div key={section.label} className="space-y-4">
+                <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-military-khaki">
                   {section.label}
                 </h3>
-                <ul className="space-y-3 text-base">
+                <ul className="space-y-3 text-sm">
                   {section.items.map((item) => (
                     <li key={item.name}>
-                      {item.path.startsWith("https:") ||
-                      item.path === aicteapprovals ? (
-                        <a
-                          href={item.path}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-1 text-[#293794] hover:text-primary transition-colors duration-200"
-                        >
-                          {item.name}
-                        </a>
-                      ) : (
-                        <Link
-                          href={item.path}
-                          onClick={scrollToTop}
-                          className="group inline-flex items-center gap-1 text-[#293794] hover:text-primary transition-colors duration-200"
-                        >
-                          {item.name}
-                        </Link>
-                      )}
+                      <Link
+                        href={item.path}
+                        onClick={scrollToTop}
+                        className="group inline-flex items-center gap-2 text-military-khaki/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-black rounded px-1 -mx-1"
+                      >
+                        <span>{item.name}</span>
+                        <span className="h-px w-0 bg-military-khaki transition-all group-hover:w-6" />
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -205,59 +169,21 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        {/* <div className="mt-12 p-6 bg-white/50 backdrop-blur-sm rounded-xl border border-blue-100 shadow-sm">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <div className="lg:col-span-8">
-              <h3 className="text-xl font-semibold text-mainBlue mb-2">Stay Updated with SSIM</h3>
-              <p className="text-[#293794]/80">
-              Stay updated with our latest news and events
-              </p>
-            </div>
-            <div className="lg:col-span-4">
-              <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-3">
-                <Input
-                  type="email"
-                  placeholder="Your email address"
-                  className="flex-1 border-blue-200 focus:border-mainBlue focus:ring-mainBlue"
-                  required
-                />
-                <Button type="submit" className="bg-mainBlue hover:bg-mainBlue/90 text-white font-medium">
-                  Subscribe
-                </Button>
-              </form>
-            </div>
-          </div>
-        </div> */}
+        {/* Separator - prominent divider before copyright */}
+        <div className="pt-8 pb-6">
+          <Separator className="h-px w-full bg-military-brown/70" />
+        </div>
 
-        <Separator className="my-12 bg-[#293794]" />
-
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 text-base text-muted-foreground">
-          <p className="text-mainBlue">
-            Copyright © SSIM {new Date().getFullYear()}
+        {/* Copyright section */}
+        <div className="flex flex-col items-center justify-between gap-4 pt-2 pb-4 text-xs text-military-khaki/80 sm:flex-row">
+          <p className="font-medium text-military-khaki">
+            © {new Date().getFullYear()} Military Matters 24/7. All rights
+            reserved.
           </p>
-          {/* <div className="flex gap-6">
-            <Link
-              href="/privacy-policy"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToTop();
-              }}
-              className="hover:text-primary text-mainBlue transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms-of-service"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToTop();
-              }}
-              className="hover:text-primary text-mainBlue transition-colors"
-            >
-              Terms of Service
-            </Link>
-          </div> */}
+          <p className="text-center text-military-khaki/70 sm:text-right">
+            Built for clear briefings, not noise. Hosted in India, focused on
+            Indian defence.
+          </p>
         </div>
       </div>
     </footer>
