@@ -43,7 +43,7 @@ const BlogPostPage = ({ params }) => {
             <span>{post.readTime}</span>
           </div>
           <Link
-            href="/blog"
+            href="/news"
             className="font-semibold uppercase tracking-wide text-military-khaki hover:text-white"
           >
             ← Back to all briefings

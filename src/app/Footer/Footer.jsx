@@ -21,7 +21,7 @@ export default function Footer() {
       label: "Platform",
       items: [
         { name: "Home", path: "/" },
-        { name: "Blog & Briefings", path: "/blog" },
+        { name: "Blog & Briefings", path: "/news" },
         { name: "About", path: "/about" },
         { name: "Contact HQ", path: "/contact-us" },
       ],
@@ -29,11 +29,11 @@ export default function Footer() {
     {
       label: "Domains",
       items: [
-        { name: "Missiles & Artillery", path: "/blog?tab=missiles" },
-        { name: "Air Power", path: "/blog?tab=air-force" },
-        { name: "Sea Power", path: "/blog?tab=navy" },
-        { name: "Land Forces", path: "/blog?tab=army" },
-        { name: "Cyber & EW", path: "/blog?tab=electronic-warfare" },
+        { name: "Missiles & Artillery", path: "/news?tab=missiles" },
+        { name: "Air Power", path: "/news?tab=air-force" },
+        { name: "Sea Power", path: "/news?tab=navy" },
+        { name: "Land Forces", path: "/news?tab=army" },
+        { name: "Cyber & EW", path: "/news?tab=electronic-warfare" },
       ],
     },
     {
