@@ -6,122 +6,103 @@ import Image from "next/image";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
   SheetClose,
+  SheetTrigger,
 } from "@/components/ui/sheet";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { Menu, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, ChevronRight } from "lucide-react";
 import { navlinks } from "@/data/navData";
 
-const Drawer = () => {
-  const CollapsibleNavItem = ({ item }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger
-          className="flex items-center justify-between w-full py-2 px-4 font-semibold text-military-khaki tracking-wider hover:bg-military-army-green/30 hover:text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-military-army-green focus:ring-offset-2 border-l-2 border-transparent hover:border-military-army-green"
-          aria-expanded={isOpen}
-          aria-label={`Toggle ${item.name} menu`}
+// This is a new, self-contained component for the collapsible items.
+const CollapsibleNavItem = ({ item }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-lg font-bold text-slate-200 transition-all hover:bg-white/5">
+        <span>{item.name}</span>
+        <ChevronRight
+          className={`h-6 w-6 text-amber-400 transition-transform duration-200 ${
+            isOpen ? "rotate-90" : ""
+          }`}
+          aria-hidden="true"
+        />
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <ul
+          className="mt-2 space-y-1 border-l-2 border-slate-700 pl-6"
+          role="list"
         >
-          <span>{item.name}</span>
-          {isOpen ? (
-            <ChevronDown
-              className="h-4 w-4 text-military-forest-green"
-              aria-hidden="true"
-            />
-          ) : (
-            <ChevronRight
-              className="h-4 w-4 text-military-forest-green"
-              aria-hidden="true"
-            />
-          )}
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <ul
-            className="pl-4 space-y-1 border-l border-military-brown/30 ml-2"
-            role="list"
-          >
-            {item.dropdown?.map((subItem, subIndex) => (
-              <li key={subItem.path || subIndex} role="listitem">
-                {subItem.subDropdown ? (
-                  <CollapsibleNavItem
-                    item={{ name: subItem.name, dropdown: subItem.subDropdown }}
-                  />
-                ) : (
-                  <SheetClose asChild>
-                    <Link
-                      href={subItem.path}
-                      className="block py-2 px-4 w-full text-sm text-military-khaki/80 hover:text-white hover:bg-military-army-green/30 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-military-army-green focus:ring-offset-2 border-l-2 border-transparent hover:border-military-forest-green"
-                    >
-                      {subItem.name}
-                    </Link>
-                  </SheetClose>
-                )}
-              </li>
-            ))}
-          </ul>
-        </CollapsibleContent>
-      </Collapsible>
-    );
-  };
+          {item.dropdown?.map((subItem) => (
+            <li key={subItem.path || subItem.name} role="listitem">
+              <SheetClose asChild>
+                <Link
+                  href={subItem.path}
+                  className="block rounded-md px-4 py-2.5 text-base text-slate-300 transition-all hover:bg-white/5 hover:text-amber-400"
+                >
+                  {subItem.name}
+                </Link>
+              </SheetClose>
+            </li>
+          ))}
+        </ul>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+};
 
+const Drawer = () => {
   return (
     <Sheet>
       <SheetTrigger
-        className="flex items-center gap-1 bg-military-charcoal-light hover:bg-military-blue rounded-md p-2 transition-colors focus:outline-none focus:ring-2 focus:ring-military-army-green focus:ring-offset-2 border border-military-brown/50"
         aria-label="Open navigation menu"
+        className="group flex items-center gap-1 rounded-lg border border-white/20 bg-white/10 p-2.5 text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400"
       >
-        <Menu className="w-6 h-6 text-military-khaki" aria-hidden="true" />
+        <Menu className="h-7 w-7" aria-hidden="true" />
       </SheetTrigger>
-      <SheetContent className="bg-linear-to-b from-military-charcoal to-military-charcoal-light overflow-auto border-l border-military-brown">
-        <SheetHeader className="pb-4 border-b border-military-brown/50">
-          <div className="flex items-center gap-3 mb-3">
+      <SheetContent className="flex w-full flex-col overflow-y-auto border-l-2 border-slate-700 bg-slate-900 bg-[url('/noise.png')] text-white sm:w-96">
+        <SheetHeader className="border-b border-white/10 pb-4">
+          <div className="mb-4 flex items-center gap-4">
             <Image
               src="/logo.png"
               alt="Military Matters 24/7"
-              width={100}
-              height={100}
-              className="h-24 w-auto object-contain"
+              width={64}
+              height={64}
+              className="h-16 w-16 object-contain"
               priority
             />
-            <SheetTitle className="text-military-khaki text-lg sm:text-2xl font-bold text-left">
+            <SheetTitle className="text-2xl font-bold text-white">
               Military Matters 24/7
             </SheetTitle>
           </div>
-          <SheetDescription
-            as="div"
-            className="text-military-khaki/90 text-left pt-4"
-          >
-            <nav aria-label="Main navigation">
-              <ul className="space-y-1" role="list">
-                {navlinks.map((item) => (
-                  <li key={item.path || item.name} role="listitem">
-                    {item.dropdown ? (
-                      <CollapsibleNavItem item={item} />
-                    ) : (
-                      <SheetClose asChild>
-                        <Link
-                          href={item.path}
-                          className="block py-2 px-4 w-full font-semibold text-military-khaki tracking-wider hover:text-white hover:bg-military-army-green/30 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-military-army-green focus:ring-offset-2 border-l-2 border-transparent hover:border-military-army-green"
-                        >
-                          {item.name}
-                        </Link>
-                      </SheetClose>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </SheetDescription>
         </SheetHeader>
+        <div className="flex-1 py-6">
+          <nav aria-label="Main navigation">
+            <ul className="space-y-2" role="list">
+              {navlinks.map((item) => (
+                <li key={item.path || item.name} role="listitem">
+                  {item.dropdown ? (
+                    <CollapsibleNavItem item={item} />
+                  ) : (
+                    <SheetClose asChild>
+                      <Link
+                        href={item.path}
+                        className="group flex w-full items-center rounded-lg px-4 py-3 text-left text-lg font-bold text-slate-200 transition-all hover:bg-white/5 border-l-4 border-transparent hover:border-amber-400"
+                      >
+                        {item.name}
+                      </Link>
+                    </SheetClose>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </SheetContent>
     </Sheet>
   );

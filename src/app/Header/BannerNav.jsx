@@ -5,73 +5,52 @@ import Drawer from "./Drawer";
 
 export default function BannerNav() {
   return (
-    <nav
-      className="w-full py-3 px-4 text-sm border-b border-military-brown/40"
-      aria-label="Main navigation"
-    >
+    <nav className="w-full py-3 px-4 sm:px-6" aria-label="Main navigation">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo Section */}
-        <div className="flex items-center">
-          <Link
-            href="/"
-            className="flex items-center focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-black rounded"
-            aria-label="Military Matters 24/7 - Home"
-          >
-            <Image
-              src="/logo.png"
-              alt="Military Matters 24/7 - Military News and Analysis"
-              width={56}
-              height={56}
-              className="h-12 sm:h-14 w-auto object-contain transition-transform duration-300 hover:scale-105"
-              priority
-              quality={90}
-            />
-          </Link>
-        </div>
+        <Link
+          href="/"
+          className="group focus:outline-none focus:ring-4 focus:ring-amber-400/50 focus:ring-offset-4 focus:ring-offset-slate-900 rounded-lg"
+          aria-label="Military Matters 24/7 - Home"
+        >
+          <Image
+            src="/logo.png"
+            alt="Military Matters 24/7"
+            width={88}
+            height={88}
+            className="h-20 sm:h-22 w-auto object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_theme('colors.white/0.2')]"
+            priority
+            quality={100}
+          />
+        </Link>
 
         {/* Contact Info + Drawer */}
-        <div className="flex items-center gap-8 text-military-khaki">
-          {/* Contact Links - Hidden on Mobile */}
-          <div className="hidden lg:flex items-center space-x-6">
+        <div className="flex items-center gap-6 text-white">
+          {/* Contact Links */}
+          <div className="hidden lg:flex items-center space-x-6 font-semibold">
             <a
               href="#location"
-              className="flex items-center gap-2 hover:text-white transition-colors duration-300 group focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-military-army-green rounded"
-              aria-label="View location"
+              className="flex items-center gap-2.5 text-slate-100 hover:text-white transition-colors duration-300 group"
             >
               <MapPin
-                size={16}
-                className="text-military-red group-hover:text-military-red-dark"
+                size={20}
+                className="text-amber-400/80 group-hover:text-amber-400 transition-colors"
                 aria-hidden="true"
               />
-              <span className="text-sm">New Delhi, India</span>
+              <span>New Delhi, India</span>
             </a>
             <a
               href="mailto:info@militarymatters.com"
-              className="flex items-center gap-2 hover:text-white transition-colors duration-300 group focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-military-army-green rounded"
-              aria-label="Send email to info@militarymatters.com"
+              className="flex items-center gap-2.5 text-slate-100 hover:text-white transition-colors duration-300 group"
             >
               <Mail
-                size={16}
-                className="text-military-red group-hover:text-military-red-dark"
+                size={20}
+                className="text-amber-400/80 group-hover:text-amber-400 transition-colors"
                 aria-hidden="true"
               />
-              <span className="text-sm">info@militarymatters.com</span>
-            </a>
-            <a
-              href="tel:+97150XXXXXXX"
-              className="flex items-center gap-2 hover:text-white transition-colors duration-300 group focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-military-army-green rounded"
-              aria-label="Call +971 50 XXX XXXX"
-            >
-              <Phone
-                size={16}
-                className="text-military-red group-hover:text-military-red-dark"
-                aria-hidden="true"
-              />
-              <span className="text-sm">+971 50 XXX XXXX</span>
+              <span>info@militarymatters.com</span>
             </a>
           </div>
-
-          {/* Mobile Drawer */}
           <Drawer />
         </div>
       </div>

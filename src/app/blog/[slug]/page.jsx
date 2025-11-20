@@ -7,15 +7,12 @@ const BlogBanner = ({ title, categoryId }) => {
     BLOG_CATEGORIES.find((c) => c.id === categoryId)?.label ?? "Briefing";
 
   return (
-    <section className="relative w-full overflow-hidden border-b border-military-brown/40">
-      <div className="absolute inset-0 bg-[url('/header_bg.jpg')] bg-cover bg-center opacity-60" />
-      <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/90 to-black/95" />
-
+    <section className="relative w-full overflow-hidden bg-orange-500">
       <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center justify-center gap-4 px-6 py-12 text-center sm:py-16">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-military-khaki/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/90">
           {categoryLabel}
         </p>
-        <h1 className="text-3xl font-extrabold tracking-wide text-military-khaki sm:text-4xl md:text-5xl">
+        <h1 className="text-3xl font-extrabold tracking-wide text-white sm:text-4xl md:text-5xl">
           {title}
         </h1>
       </div>
@@ -31,27 +28,27 @@ const BlogPostPage = ({ params }) => {
     ) || BLOG_POSTS[0];
 
   return (
-    <main className="min-h-screen bg-military-charcoal text-military-khaki">
+    <main className="min-h-screen bg-white text-gray-900">
       <BlogBanner title={post.title} categoryId={post.category} />
 
       <article className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
         {/* Meta */}
-        <header className="mb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-military-khaki/70">
+        <header className="mb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-600">
           <div className="flex flex-wrap items-center gap-3">
             <span>{new Date(post.date).toLocaleDateString("en-IN")}</span>
-            <span className="h-1 w-1 rounded-full bg-military-khaki/60" />
+            <span className="h-1 w-1 rounded-full bg-gray-400" />
             <span>{post.readTime}</span>
           </div>
           <Link
             href="/news"
-            className="font-semibold uppercase tracking-wide text-military-khaki hover:text-white"
+            className="font-semibold uppercase tracking-wide text-orange-500 hover:text-orange-600"
           >
             ← Back to all briefings
           </Link>
         </header>
 
         {/* Hero image */}
-        <div className="mb-8 overflow-hidden rounded-2xl border border-military-brown/50 shadow-lg shadow-black/40">
+        <div className="mb-8 overflow-hidden rounded-2xl border border-orange-200 shadow-md">
           <div className="relative aspect-video w-full">
             <Image
               src={post.imageUrl}
@@ -62,7 +59,6 @@ const BlogPostPage = ({ params }) => {
               priority
               unoptimized
             />
-            <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent" />
           </div>
         </div>
 
@@ -71,7 +67,7 @@ const BlogPostPage = ({ params }) => {
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-military-army-green/50 bg-military-army-green/20 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-military-khaki"
+              className="rounded-full border border-orange-500 bg-orange-100 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-orange-600"
             >
               {tag}
             </span>
@@ -80,7 +76,7 @@ const BlogPostPage = ({ params }) => {
 
         {/* Body – real briefing for first post, template for others */}
         {post.slug === "brahmos-next-gen-strike-power" ? (
-          <div className="prose prose-invert max-w-none prose-p:text-military-khaki/90 prose-headings:text-white prose-strong:text-white prose-a:text-military-khaki prose-a:no-underline hover:prose-a:text-white">
+          <div className="prose max-w-none prose-p:text-gray-700 prose-headings:text-gray-900 prose-strong:text-gray-900 prose-a:text-orange-500 prose-a:no-underline hover:prose-a:text-orange-600">
             <p>
               India’s BrahMos cruise missile has become one of the most
               recognisable symbols of New Delhi’s precision–strike capability.
@@ -145,7 +141,7 @@ const BlogPostPage = ({ params }) => {
             </p>
           </div>
         ) : (
-          <div className="prose prose-invert max-w-none prose-p:text-military-khaki/90 prose-headings:text-white prose-strong:text-white prose-a:text-military-khaki prose-a:no-underline hover:prose-a:text-white">
+          <div className="prose max-w-none prose-p:text-gray-700 prose-headings:text-gray-900 prose-strong:text-gray-900 prose-a:text-orange-500 prose-a:no-underline hover:prose-a:text-orange-600">
             <p>
               This is a briefing template for <strong>{post.title}</strong>. In
               the live version, this section will be populated from your CMS or

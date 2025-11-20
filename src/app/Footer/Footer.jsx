@@ -54,89 +54,57 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-military-brown/40">
-      {/* Camo background image - same as header */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-[url('/header_bg.jpg')] bg-cover bg-center"
-        aria-hidden="true"
-      />
-
-      {/* Dark overlay for readability - same as header */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/70 via-black/80 to-black/90"
-        aria-hidden="true"
-      />
-
+    <footer className="relative overflow-hidden border-t-2 border-slate-800 bg-gradient-to-r from-slate-900 to-gray-900">
       {/* Footer content */}
-      <div className="relative mx-auto max-w-7xl px-4 pt-12 pb-8 text-military-khaki sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-y-12 gap-x-10 md:grid-cols-2 lg:grid-cols-12 pb-8">
+      <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-8 text-white sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-y-12 gap-x-10 md:grid-cols-2 lg:grid-cols-12 pb-12">
           {/* Logo + mission + social */}
-          <div className="space-y-6 lg:col-span-4">
+          <div className="space-y-8 lg:col-span-4">
             <button
               type="button"
               onClick={scrollToTop}
-              className="group inline-flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-black rounded"
+              className="group inline-flex items-center gap-4 focus:outline-none focus:ring-4 focus:ring-amber-400/50 focus:ring-offset-4 focus:ring-offset-slate-900 rounded-lg"
             >
               <Image
                 src={logo}
                 alt="Military Matters 24/7"
-                width={56}
-                height={56}
-                className="h-12 w-auto cursor-pointer transition-transform group-hover:scale-105 sm:h-14"
+                width={80}
+                height={80}
+                className="h-16 w-auto cursor-pointer transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_theme('colors.white/0.2')]"
                 priority
               />
-              <span className="text-left text-xs font-semibold uppercase tracking-[0.22em] text-military-khaki">
+              <span className="text-left text-lg font-bold tracking-wider text-white">
                 Military Matters 24/7
               </span>
             </button>
 
-            <p className="max-w-md text-sm leading-relaxed text-military-khaki/90">
+            <p className="max-w-md text-base leading-relaxed text-slate-300">
               Indian defence news, strategy and veteran perspectives — focused
               on clarity, capability and the realities of modern warfare.
             </p>
 
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2">
               {[
-                {
-                  icon: Twitter,
-                  label: "Twitter / X",
-                  href: "#",
-                },
-                {
-                  icon: Instagram,
-                  label: "Instagram",
-                  href: "#",
-                },
-                {
-                  icon: Facebook,
-                  label: "Facebook",
-                  href: "#",
-                },
-                {
-                  icon: Linkedin,
-                  label: "LinkedIn",
-                  href: "#",
-                },
-                {
-                  icon: Youtube,
-                  label: "YouTube",
-                  href: "#",
-                },
+                { icon: Twitter, label: "Twitter / X", href: "#" },
+                { icon: Instagram, label: "Instagram", href: "#" },
+                { icon: Facebook, label: "Facebook", href: "#" },
+                { icon: Linkedin, label: "LinkedIn", href: "#" },
+                { icon: Youtube, label: "YouTube", href: "#" },
               ].map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-black rounded-full"
+                  className="rounded-full focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
                 >
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="rounded-full border border-white/10 bg-white/10 backdrop-blur-sm text-military-khaki hover:bg-white/20 hover:text-white hover:border-white/20 transition-all hover:scale-110"
+                    className="rounded-full bg-white/10 text-white transition-all hover:scale-110 hover:bg-amber-400 hover:text-slate-900"
                     aria-label={social.label}
                   >
-                    <social.icon className="h-4 w-4" />
+                    <social.icon className="h-5 w-5" />
                   </Button>
                 </a>
               ))}
@@ -144,22 +112,20 @@ export default function Footer() {
           </div>
 
           {/* Link sections */}
-          <div className="grid grid-cols-1 gap-8 md:col-span-1 md:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 md:col-span-1 md:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
             {footerSections.map((section) => (
-              <div key={section.label} className="space-y-4">
-                <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-military-khaki">
+              <div key={section.label} className="space-y-5">
+                <h3 className="text-base font-bold uppercase tracking-wider text-amber-400">
                   {section.label}
                 </h3>
-                <ul className="space-y-3 text-sm">
+                <ul className="space-y-3 text-base">
                   {section.items.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.path}
-                        onClick={scrollToTop}
-                        className="group inline-flex items-center gap-2 text-military-khaki/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-military-khaki focus:ring-offset-2 focus:ring-offset-black rounded px-1 -mx-1"
+                        className="inline-block text-slate-300 transition-colors hover:text-white hover:underline decoration-amber-400 underline-offset-4"
                       >
-                        <span>{item.name}</span>
-                        <span className="h-px w-0 bg-military-khaki transition-all group-hover:w-6" />
+                        {item.name}
                       </Link>
                     </li>
                   ))}
@@ -169,20 +135,19 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Separator - prominent divider before copyright */}
+        {/* Separator */}
         <div className="pt-8 pb-6">
-          <Separator className="h-px w-full bg-military-brown/70" />
+          <Separator className="h-px w-full bg-white/10" />
         </div>
 
         {/* Copyright section */}
-        <div className="flex flex-col items-center justify-between gap-4 pt-2 pb-4 text-xs text-military-khaki/80 sm:flex-row">
-          <p className="font-medium text-military-khaki">
+        <div className="flex flex-col items-center justify-between gap-4 pt-2 text-sm text-slate-400 sm:flex-row">
+          <p className="font-semibold text-slate-200">
             © {new Date().getFullYear()} Military Matters 24/7. All rights
             reserved.
           </p>
-          <p className="text-center text-military-khaki/70 sm:text-right">
-            Built for clear briefings, not noise. Hosted in India, focused on
-            Indian defence.
+          <p className="text-center sm:text-right">
+            Built for clear briefings, not noise. Hosted in India.
           </p>
         </div>
       </div>

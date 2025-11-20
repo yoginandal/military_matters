@@ -1,19 +1,30 @@
 @import "tailwindcss";
 
 :root {
+  /* Base page background & text - LIGHT THEME */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1f2937; /* dark gray for text on light backgrounds */
 
-  /* Military Color Palette - CSS Custom Properties */
-  --military-charcoal: #1a1a1a;
-  --military-charcoal-light: #2a2d34;
-  --military-army-green: #5d6532;
-  --military-forest-green: #7a8d5d;
-  --military-brown: #675645;
-  --military-khaki: #e1d798;
-  --military-blue: #1c1d21;
-  --military-red: #dc2626;
-  --military-red-dark: #b91c1c;
+  /* Brand Palette - Light Orange & White Theme */
+  /* We keep the existing "military-*" token names so all current utility classes continue to work,
+     but the actual colors are now light orange/white with dark text. */
+
+  /* Light backgrounds (used for page shells like /news & blog) */
+  --military-charcoal: #ffffff; /* white background */
+  --military-charcoal-light: #fef3e7; /* very light peach/cream background */
+
+  /* Primary brand oranges */
+  --military-army-green: #fe5722; /* PRIMARY ORANGE – buttons, active states, pills */
+  --military-forest-green: #f44009; /* darker orange for hovers and stronger accents */
+
+  /* Soft supporting tones */
+  --military-brown: #fed7aa; /* warm peach border/background accents */
+  --military-khaki: #1f2937; /* dark gray for primary text on light backgrounds */
+
+  /* Cool complementary + status colors */
+  --military-blue: #4b5563; /* medium gray for subtle accents */
+  --military-red: #f97316; /* alert / live-dot orange */
+  --military-red-dark: #c2410c; /* deeper alert / hover state */
 }
 
 @theme inline {
