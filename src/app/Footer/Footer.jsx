@@ -54,8 +54,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t-2 border-slate-800 bg-gradient-to-r from-slate-900 to-gray-900">
-      {/* Footer content */}
+    <footer className="relative overflow-hidden border-t border-neutral-800 bg-neutral-900">
       <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-8 text-white sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-y-12 gap-x-10 md:grid-cols-2 lg:grid-cols-12 pb-12">
           {/* Logo + mission + social */}
@@ -63,16 +62,18 @@ export default function Footer() {
             <button
               type="button"
               onClick={scrollToTop}
-              className="group inline-flex items-center gap-4 focus:outline-none focus:ring-4 focus:ring-amber-400/50 focus:ring-offset-4 focus:ring-offset-slate-900 rounded-lg"
+              className="group inline-flex items-center gap-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-orange-400/60 focus:ring-offset-4 focus:ring-offset-neutral-900"
             >
-              <Image
-                src={logo}
-                alt="Military Matters 24/7"
-                width={80}
-                height={80}
-                className="h-16 w-auto cursor-pointer transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_theme('colors.white/0.2')]"
-                priority
-              />
+              <div className="rounded-lg bg-orange-500 p-1.5">
+                <Image
+                  src={logo}
+                  alt="Military Matters 24/7"
+                  width={80}
+                  height={80}
+                  className="h-16 w-auto cursor-pointer transition-transform duration-300 group-hover:scale-110"
+                  priority
+                />
+              </div>
               <span className="text-left text-lg font-bold tracking-wider text-white">
                 Military Matters 24/7
               </span>
@@ -96,12 +97,12 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+                  className="rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-neutral-900"
                 >
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="rounded-full bg-white/10 text-white transition-all hover:scale-110 hover:bg-amber-400 hover:text-slate-900"
+                    className="rounded-full bg-white/5 text-white transition-all hover:scale-110 hover:bg-orange-500 hover:text-neutral-900"
                     aria-label={social.label}
                   >
                     <social.icon className="h-5 w-5" />
@@ -115,7 +116,7 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-8 md:col-span-1 md:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
             {footerSections.map((section) => (
               <div key={section.label} className="space-y-5">
-                <h3 className="text-base font-bold uppercase tracking-wider text-amber-400">
+                <h3 className="text-base font-bold uppercase tracking-wider text-orange-400">
                   {section.label}
                 </h3>
                 <ul className="space-y-3 text-base">
@@ -123,7 +124,7 @@ export default function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.path}
-                        className="inline-block text-slate-300 transition-colors hover:text-white hover:underline decoration-amber-400 underline-offset-4"
+                        className="inline-block text-slate-300 transition-colors hover:text-white hover:underline decoration-orange-400 underline-offset-4"
                       >
                         {item.name}
                       </Link>
@@ -140,7 +141,7 @@ export default function Footer() {
           <Separator className="h-px w-full bg-white/10" />
         </div>
 
-        {/* Copyright section */}
+        {/* Copyright */}
         <div className="flex flex-col items-center justify-between gap-4 pt-2 text-sm text-slate-400 sm:flex-row">
           <p className="font-semibold text-slate-200">
             © {new Date().getFullYear()} Military Matters 24/7. All rights

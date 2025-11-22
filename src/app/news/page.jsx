@@ -107,9 +107,9 @@ function NewsContent() {
                 {posts.map((post) => (
                   <article
                     key={post.slug}
-                    className="group relative flex flex-col overflow-hidden rounded-2xl bg-linear-to-br from-orange-500 to-orange-600 text-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/40"
+                    className="group relative flex flex-col overflow-hidden rounded-2xl bg-slate-900 text-slate-100 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-900/40"
                   >
-                    {/* FIXED: No Overlay & Aligned Image Container */}
+                    {/* Fixed image container: no overlay, aligned height */}
                     <div className="relative w-full aspect-video bg-gray-500">
                       {post.imageUrl && (
                         <img
@@ -126,28 +126,30 @@ function NewsContent() {
                       className="absolute inset-0"
                       aria-label={post.title}
                     />
-                    <div className="flex flex-1 flex-col justify-between p-6 relative z-10">
+
+                    <div className="relative z-10 flex flex-1 flex-col justify-between p-6">
                       <header className="space-y-3">
-                        <div className="flex items-center gap-3 text-sm text-orange-100">
-                          <span className="font-semibold uppercase tracking-wider">
+                        <div className="flex items-center gap-3 text-sm text-slate-300">
+                          <span className="inline-flex items-center rounded-full bg-orange-500 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
                             {cat.label}
                           </span>
-                          <span className="h-1 w-1 rounded-full bg-white/50" />
+                          <span className="h-1 w-1 rounded-full bg-slate-500" />
                           <span>{post.readTime}</span>
                         </div>
                         <h3 className="text-xl font-bold text-white">
                           {post.title}
                         </h3>
-                        <p className="text-orange-50/90">{post.excerpt}</p>
+                        <p className="text-slate-100/90">{post.excerpt}</p>
                       </header>
                       <footer className="mt-6">
-                        <span className="text-sm font-bold text-white transition-all group-hover:underline">
+                        <span className="text-sm font-bold text-orange-400 transition-all group-hover:underline">
                           Read Briefing →
                         </span>
                       </footer>
                     </div>
                   </article>
                 ))}
+
                 {posts.length === 0 && (
                   <div className="col-span-full rounded-xl border border-dashed border-orange-300 bg-orange-50 py-16 text-center text-orange-700">
                     No briefings in this domain yet. New analyses will be
