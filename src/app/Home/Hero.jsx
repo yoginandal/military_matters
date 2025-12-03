@@ -1,7 +1,49 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, ShieldAlert } from "lucide-react";
+import { useState, useEffect } from "react";
+
+// 1. Define your slider data here
+const heroSlides = [
+  {
+    id: 1,
+    src: "/indian-military-fighter-jet-modern-defence.jpg", // Replace with real paths
+    alt: "Indian Air Force Fighter Jets",
+    badge: "Air Superiority",
+  },
+  {
+    id: 2,
+    src: "/indian-navy-ship-patrol.jpg",
+    alt: "Indian Navy Maritime Operations",
+    badge: "Naval Power",
+  },
+  {
+    id: 3,
+    src: "/indian-army-tank-desert.jpg",
+    alt: "Indian Army Armored Units",
+    badge: "Land Warfare",
+  },
+  {
+    id: 4,
+    src: "/drdo-missile-launch.jpg",
+    alt: "Strategic Missile Systems",
+    badge: "Strategic Assets",
+  },
+];
 
 export function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // 2. Auto-slider logic
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000); // Changes every 5 seconds
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="relative bg-neutral-900 overflow-hidden">
       {/* Subtle grid background */}
@@ -12,7 +54,7 @@ export function HeroSection() {
 
       <div className="relative max-w-7xl mx-auto px-4 py-24 lg:py-36">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Content */}
+          {/* LEFT SIDE: Content */}
           <div>
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
@@ -75,30 +117,59 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Featured Image with Card Overlay */}
+          {/* RIGHT SIDE: Slider */}
           <div className="relative">
-            {/* Main Image Card */}
+            {/* Main Image Card Frame */}
             <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm p-2">
-              <div className="aspect-[4/3] rounded-xl overflow-hidden">
-                <img
-                  src="/indian-military-fighter-jet-modern-defence.jpg"
-                  alt="Indian Military Defence"
-                  className="w-full h-full object-cover"
-                />
+              {/* 3. Slider Container */}
+              <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-neutral-800">
+                {heroSlides.map((slide, index) => (
+                  <div
+                    key={slide.id}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                      index === currentSlide
+                        ? "opacity-100 z-10"
+                        : "opacity-0 z-0"
+                    }`}
+                  >
+                    <img
+                      src={slide.src}
+                      alt={slide.alt}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Gradient Overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                    {/* Internal Image Badge */}
+                    <div className="absolute bottom-4 left-4 px-3 py-1 bg-black/50 backdrop-blur-md border border-white/10 rounded text-xs text-white font-mono uppercase tracking-wider">
+                      {slide.badge}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* 4. Slider Indicators (Tactical Dashes) */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                {heroSlides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`h-1 rounded-full transition-all duration-300 ${
+                      index === currentSlide
+                        ? "w-8 bg-orange-500"
+                        : "w-2 bg-white/30 hover:bg-white/50"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
               </div>
             </div>
 
-            {/* Floating Card - Dark themed */}
-            <div className="absolute -bottom-6 -left-6 bg-neutral-800 border border-white/10 rounded-xl p-5 shadow-2xl max-w-xs hidden lg:block">
+            {/* Floating Card - Fixed on top of slider */}
+            <div className="absolute -bottom-6 -left-6 bg-neutral-800 border border-white/10 rounded-xl p-5 shadow-2xl max-w-xs hidden lg:block z-30">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg
-                    className="w-6 h-6 text-orange-400"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
-                  </svg>
+                  <ShieldAlert className="w-6 h-6 text-orange-400" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-white text-sm">
@@ -106,13 +177,14 @@ export function HeroSection() {
                   </h4>
                   <p className="text-xs text-slate-400 mt-1 leading-relaxed">
                     New strategic briefing on Indo-Pacific security
+                    architecture.
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Top right badge */}
-            <div className="absolute -top-3 -right-3 bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg hidden lg:block">
+            <div className="absolute -top-3 -right-3 bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg hidden lg:block z-30">
               LIVE
             </div>
           </div>
