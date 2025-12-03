@@ -3,6 +3,7 @@ import { DomainsSection } from "./Home/domains-section";
 import { LatestBriefingsSection } from "./Home/LatestBriefingsSection";
 import { BlogFeedSection } from "./Home/BlogFeedSection";
 import { MagazineSection } from "./Home/MagazineSection";
+import { CommunityFeedSection } from "./Home/CommunityFeedSection/CommunityFeedSection";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <DomainsSection />
       <LatestBriefingsSection />
       <MagazineSection />
+      <CommunityFeedSection />
       <BlogFeedSection />
     </div>
   );
