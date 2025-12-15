@@ -75,19 +75,19 @@ const smallPosts = [
 
 export function MagazineSection() {
   return (
-    <section className="py-24 bg-[#0a0a0a] border-t border-white/5 relative overflow-hidden">
+    <section className="py-24 bg-white dark:bg-[#0a0a0a] border-t border-slate-200 dark:border-white/5 relative overflow-hidden">
       {/* Decorative Background Elements */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-neutral-900/20 to-transparent pointer-events-none" />
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-slate-100 dark:from-neutral-900/20 to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/5 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Header */}
       <div className="max-w-7xl mx-auto px-4 mb-12 flex items-end justify-between">
         <div>
-          <h2 className="text-4xl font-bold text-white tracking-tight flex items-center gap-3">
+          <h2 className="text-4xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-3">
             <ScanLine className="w-8 h-8 text-orange-500" />
             Strategic Front
           </h2>
-          <p className="text-slate-500 mt-2 text-sm font-mono tracking-wide">
+          <p className="text-slate-600 dark:text-slate-500 mt-2 text-sm font-mono tracking-wide">
             // INTELLIGENCE BRIEFINGS AND ANALYSIS
           </p>
         </div>
@@ -104,12 +104,12 @@ export function MagazineSection() {
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
           {/* --- LEFT COLUMN: Featured Post (Spans 7 cols) --- */}
           <div className="lg:col-span-7 group cursor-pointer h-full flex flex-col">
-            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900 shadow-2xl h-full">
+            <div className="relative overflow-hidden rounded-2xl border border-slate-300 dark:border-white/10 bg-white dark:bg-neutral-900 shadow-2xl h-full">
               {/* Image Container - Full Height on Desktop? No, let's make it 60% height */}
               <div className="relative aspect-video lg:aspect-auto lg:h-[400px] overflow-hidden">
-                <div className="absolute inset-0 bg-neutral-800 group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-slate-200 dark:bg-neutral-800 group-hover:scale-105 transition-transform duration-700" />
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-90" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 dark:from-[#0a0a0a] via-transparent to-transparent opacity-90" />
 
                 <div className="absolute top-6 left-6 flex gap-2">
                   <span className="px-3 py-1 bg-orange-600 text-white text-xs font-bold rounded uppercase tracking-wider shadow-lg shadow-orange-900/20">
@@ -130,29 +130,29 @@ export function MagazineSection() {
                   {featuredPost.title}
                 </h3>
 
-                <p className="text-slate-400 text-lg leading-relaxed mb-8 max-w-2xl border-l-2 border-orange-500/30 pl-4">
+                <p className="text-slate-200 dark:text-slate-400 text-lg leading-relaxed mb-8 max-w-2xl border-l-2 border-orange-500/30 pl-4">
                   {featuredPost.excerpt}
                 </p>
 
-                <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-6">
+                <div className="mt-auto flex items-center justify-between border-t border-slate-300 dark:border-white/5 pt-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-slate-400 font-bold text-xs">
+                    <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-neutral-800 border border-slate-300 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-400 font-bold text-xs">
                       VB
                     </div>
                     <div>
                       <div className="text-white text-sm font-bold">
                         {featuredPost.author}
                       </div>
-                      <div className="text-slate-500 text-xs uppercase tracking-wider">
+                      <div className="text-slate-300 dark:text-slate-500 text-xs uppercase tracking-wider">
                         Strategic Analyst
                       </div>
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <button className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-white transition-colors">
+                    <button className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                       <Bookmark className="w-5 h-5" />
                     </button>
-                    <button className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-white transition-colors">
+                    <button className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                       <Share2 className="w-5 h-5" />
                     </button>
                   </div>
@@ -166,11 +166,11 @@ export function MagazineSection() {
             {smallPosts.map((post) => (
               <div
                 key={post.id}
-                className="group relative bg-neutral-900/50 border border-white/5 hover:border-orange-500/30 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/5 flex flex-col"
+                className="group relative bg-slate-50 dark:bg-neutral-900/50 border border-slate-300 dark:border-white/5 hover:border-orange-500/30 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/5 flex flex-col"
               >
                 {/* Card Header: Image & Badge */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-neutral-800">
-                  <div className="absolute inset-0 bg-neutral-800 group-hover:scale-110 transition-transform duration-500" />
+                <div className="relative aspect-[16/10] overflow-hidden bg-slate-200 dark:bg-neutral-800">
+                  <div className="absolute inset-0 bg-slate-200 dark:bg-neutral-800 group-hover:scale-110 transition-transform duration-500" />
                   <div className="absolute top-3 left-3">
                     <span className="px-2 py-0.5 bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-bold text-white uppercase tracking-wider rounded">
                       {post.category}
@@ -186,15 +186,15 @@ export function MagazineSection() {
 
                 {/* Content */}
                 <div className="p-4 flex flex-col flex-grow">
-                  <h4 className="text-base font-bold text-white mb-2 leading-snug group-hover:text-orange-500 transition-colors line-clamp-2">
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2 leading-snug group-hover:text-orange-500 transition-colors line-clamp-2">
                     {post.title}
                   </h4>
 
-                  <div className="mt-auto pt-3 flex items-center justify-between border-t border-white/5 text-xs text-slate-500">
-                    <span className="font-medium text-slate-400">
+                  <div className="mt-auto pt-3 flex items-center justify-between border-t border-slate-200 dark:border-white/5 text-xs text-slate-600 dark:text-slate-500">
+                    <span className="font-medium text-slate-700 dark:text-slate-400">
                       {post.author}
                     </span>
-                    <span className="font-mono text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-400">
+                    <span className="font-mono text-[10px] bg-slate-100 dark:bg-white/5 px-1.5 py-0.5 rounded text-slate-600 dark:text-slate-400">
                       {post.date}
                     </span>
                   </div>

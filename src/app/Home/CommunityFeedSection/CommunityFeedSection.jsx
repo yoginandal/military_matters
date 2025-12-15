@@ -50,11 +50,11 @@ const articles = [
 
 export function CommunityFeedSection() {
   return (
-    <section className="py-24 bg-[#0a0a0a] border-t border-white/5 font-sans">
+    <section className="py-24 bg-white dark:bg-[#0a0a0a] border-t border-slate-200 dark:border-white/5 font-sans">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Header (Optional) */}
         <div className="mb-12">
-          <h2 className="text-3xl font-bold text-white">Community Intel</h2>
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Community Intel</h2>
           <div className="h-1 w-12 bg-orange-500 rounded-full mt-2" />
         </div>
 

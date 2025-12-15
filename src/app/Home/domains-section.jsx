@@ -58,9 +58,9 @@ const domains = [
 
 export function DomainsSection() {
   return (
-    <section className="py-24 bg-[#0a0a0a] relative overflow-hidden border-t border-white/5">
+    <section className="py-24 bg-white dark:bg-[#0a0a0a] relative overflow-hidden border-t border-slate-200 dark:border-white/5">
       {/* Background: Deep Void with Dot Matrix (Distinct from Grid) */}
-      <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
+      <div className="absolute inset-0 bg-[radial-gradient(#000000_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
 
       {/* Ambient Lighting - Asymmetrical "War Room" Glow */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-600/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
@@ -76,12 +76,12 @@ export function DomainsSection() {
             <span className="text-orange-500 text-xs font-mono font-bold uppercase tracking-widest mb-2 block">
               // Strategic Coverage
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight">
               Operational Domains
             </h2>
           </div>
           <div className="md:text-right max-w-xs">
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
               Intelligence breakdown across the five pillars of modern defense
               technology.
             </p>
@@ -99,7 +99,7 @@ export function DomainsSection() {
                 className="group relative h-full"
               >
                 {/* Card Background: Glass Monolith style */}
-                <div className="absolute inset-0 bg-white/[0.02] group-hover:bg-white/[0.04] border border-white/5 group-hover:border-orange-500/20 rounded-sm transition-all duration-500 backdrop-blur-sm" />
+                <div className="absolute inset-0 bg-slate-50 dark:bg-white/[0.02] group-hover:bg-slate-100 dark:group-hover:bg-white/[0.04] border border-slate-200 dark:border-white/5 group-hover:border-orange-500/20 rounded-sm transition-all duration-500 backdrop-blur-sm" />
 
                 {/* Active State: Orange Line Reveal */}
                 <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-orange-500 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
@@ -108,31 +108,31 @@ export function DomainsSection() {
                 <div className="relative p-8 flex flex-col h-full z-10">
                   {/* Header */}
                   <div className="flex justify-between items-start mb-8">
-                    <div className="p-3 bg-white/5 rounded-sm border border-white/5 group-hover:bg-orange-500/10 group-hover:border-orange-500/20 transition-colors duration-300">
-                      <Icon className="w-6 h-6 text-slate-400 group-hover:text-orange-400 transition-colors" />
+                    <div className="p-3 bg-slate-100 dark:bg-white/5 rounded-sm border border-slate-300 dark:border-white/5 group-hover:bg-orange-500/10 group-hover:border-orange-500/20 transition-colors duration-300">
+                      <Icon className="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors" />
                     </div>
-                    <ArrowUpRight className="w-5 h-5 text-slate-700 group-hover:text-orange-500 transition-colors duration-300" />
+                    <ArrowUpRight className="w-5 h-5 text-slate-500 dark:text-slate-700 group-hover:text-orange-500 transition-colors duration-300" />
                   </div>
 
                   {/* Text Content */}
                   <div className="mb-8 flex-grow">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="text-xs font-mono text-slate-600 group-hover:text-orange-500/70">
+                      <span className="text-xs font-mono text-slate-500 dark:text-slate-600 group-hover:text-orange-500/70">
                         0{domain.id}
                       </span>
-                      <h3 className="text-xl font-bold text-white group-hover:text-orange-500 transition-colors">
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-orange-500 transition-colors">
                         {domain.name}
                       </h3>
                     </div>
-                    <p className="text-sm text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors border-l border-white/5 pl-4">
+                    <p className="text-sm text-slate-600 dark:text-slate-500 leading-relaxed group-hover:text-slate-700 dark:group-hover:text-slate-400 transition-colors border-l border-slate-300 dark:border-white/5 pl-4">
                       {domain.description}
                     </p>
                   </div>
 
                   {/* Footer Stats */}
-                  <div className="flex items-center gap-2 pt-6 border-t border-white/5 group-hover:border-white/10">
+                  <div className="flex items-center gap-2 pt-6 border-t border-slate-200 dark:border-white/5 group-hover:border-slate-300 dark:group-hover:border-white/10">
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/50 group-hover:bg-emerald-500 group-hover:shadow-[0_0_10px_rgba(16,185,129,0.5)] transition-all" />
-                    <span className="text-xs font-mono text-slate-500 group-hover:text-white transition-colors">
+                    <span className="text-xs font-mono text-slate-600 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
                       {domain.count} Active Reports
                     </span>
                   </div>

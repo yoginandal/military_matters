@@ -88,10 +88,10 @@ export function BlogFeedSection() {
     : filteredPosts;
 
   return (
-    <section className="relative bg-[#0a0a0a] w-full border-t border-white/5">
+    <section className="relative bg-white dark:bg-[#0a0a0a] w-full border-t border-slate-200 dark:border-white/5">
       {/* --- Background Wrapper (Handles Overflow separately) --- */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#000000_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-600/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4" />
       </div>
@@ -107,7 +107,7 @@ export function BlogFeedSection() {
             <div className="space-y-8">
               {/* Header & Search */}
               <div>
-                <h3 className="text-white font-bold text-lg flex items-center gap-2 mb-6">
+                <h3 className="text-slate-900 dark:text-white font-bold text-lg flex items-center gap-2 mb-6">
                   <Filter className="w-4 h-4 text-orange-500" />
                   Intel Filters
                 </h3>
@@ -118,9 +118,9 @@ export function BlogFeedSection() {
                     placeholder="Search archives..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-neutral-900 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-sm text-slate-300 placeholder:text-slate-600 focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all"
+                    className="w-full bg-slate-100 dark:bg-neutral-900 border border-slate-300 dark:border-white/10 rounded-lg py-3 pl-10 pr-4 text-sm text-slate-900 dark:text-slate-300 placeholder:text-slate-500 dark:placeholder:text-slate-600 focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all"
                   />
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-orange-500 transition-colors" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-slate-500 group-focus-within:text-orange-500 transition-colors" />
                 </div>
               </div>
 
@@ -138,7 +138,7 @@ export function BlogFeedSection() {
                         ${
                           isActive
                             ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20 border-orange-500"
-                            : "bg-neutral-900/50 lg:bg-transparent border-white/5 text-slate-400 hover:bg-white/5 hover:text-white"
+                            : "bg-slate-100 dark:bg-neutral-900/50 lg:bg-transparent border-slate-300 dark:border-white/5 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white"
                         }
                       `}
                     >
@@ -146,7 +146,7 @@ export function BlogFeedSection() {
                         className={`w-4 h-4 ${
                           isActive
                             ? "text-white"
-                            : "text-slate-500 group-hover:text-orange-400"
+                            : "text-slate-500 dark:text-slate-500 group-hover:text-orange-500 dark:group-hover:text-orange-400"
                         }`}
                       />
                       <span className="whitespace-nowrap">{cat.label}</span>
@@ -159,14 +159,14 @@ export function BlogFeedSection() {
               </nav>
 
               {/* Newsletter Widget */}
-              <div className="hidden lg:block bg-neutral-900/50 border border-white/5 rounded-xl p-5">
-                <h4 className="text-white text-sm font-bold mb-2">
+              <div className="hidden lg:block bg-slate-100 dark:bg-neutral-900/50 border border-slate-300 dark:border-white/5 rounded-xl p-5">
+                <h4 className="text-slate-900 dark:text-white text-sm font-bold mb-2">
                   Daily Briefing
                 </h4>
-                <p className="text-xs text-slate-500 mb-4">
+                <p className="text-xs text-slate-600 dark:text-slate-500 mb-4">
                   Get critical defense updates delivered to your secure inbox.
                 </p>
-                <button className="w-full py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded text-xs font-semibold text-white transition-colors">
+                <button className="w-full py-2 bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 rounded text-xs font-semibold text-slate-900 dark:text-white transition-colors">
                   Subscribe
                 </button>
               </div>
@@ -177,11 +177,11 @@ export function BlogFeedSection() {
           <div className="lg:col-span-9 min-h-[50vh]">
             <div className="space-y-8">
               {/* Feed Header */}
-              <div className="flex items-end justify-between pb-6 border-b border-white/5">
-                <h2 className="text-2xl md:text-3xl font-bold text-white">
+              <div className="flex items-end justify-between pb-6 border-b border-slate-200 dark:border-white/5">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
                   Latest Analysis
                 </h2>
-                <span className="text-xs font-mono text-slate-500 hidden sm:block">
+                <span className="text-xs font-mono text-slate-600 dark:text-slate-500 hidden sm:block">
                   SHOWING {displayPosts.length} OF {filteredPosts.length}{" "}
                   REPORTS
                 </span>
@@ -203,7 +203,7 @@ export function BlogFeedSection() {
                       >
                         <article className="grid md:grid-cols-12 gap-6 items-start">
                           {/* Thumbnail */}
-                          <div className="md:col-span-5 relative aspect-video rounded-xl overflow-hidden bg-neutral-800 border border-white/10 shadow-2xl">
+                          <div className="md:col-span-5 relative aspect-video rounded-xl overflow-hidden bg-slate-200 dark:bg-neutral-800 border border-slate-300 dark:border-white/10 shadow-2xl">
                             {post.imageUrl ? (
                               <img
                                 src={post.imageUrl}
@@ -227,33 +227,33 @@ export function BlogFeedSection() {
 
                           {/* Content */}
                           <div className="md:col-span-7 flex flex-col h-full py-1">
-                            <div className="flex items-center gap-3 mb-3 text-xs font-medium text-slate-500">
+                            <div className="flex items-center gap-3 mb-3 text-xs font-medium text-slate-600 dark:text-slate-500">
                               <span className="text-orange-500 font-mono tracking-tight">
                                 {formatDate(post.date)}
                               </span>
-                              <span className="w-1 h-1 rounded-full bg-slate-700" />
+                              <span className="w-1 h-1 rounded-full bg-slate-400 dark:bg-slate-700" />
                               <span className="flex items-center gap-1.5">
                                 <Clock className="w-3 h-3" />{" "}
                                 {post.readTime || "5 min"}
                               </span>
                             </div>
 
-                            <h3 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-orange-500 transition-colors leading-tight">
+                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-orange-500 transition-colors leading-tight">
                               {post.title}
                             </h3>
 
-                            <p className="text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2 md:line-clamp-3">
+                            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2 md:line-clamp-3">
                               {post.excerpt}
                             </p>
 
-                            <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
-                              <div className="text-xs text-slate-500">
+                            <div className="mt-auto flex items-center justify-between border-t border-slate-200 dark:border-white/5 pt-4">
+                              <div className="text-xs text-slate-600 dark:text-slate-500">
                                 By{" "}
-                                <span className="text-slate-300 font-medium">
+                                <span className="text-slate-700 dark:text-slate-300 font-medium">
                                   Defense Bureau
                                 </span>
                               </div>
-                              <div className="flex items-center gap-2 text-xs font-bold text-white group-hover:text-orange-500 transition-colors uppercase tracking-wider">
+                              <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-orange-500 transition-colors uppercase tracking-wider">
                                 Read Briefing <ArrowRight className="w-3 h-3" />
                               </div>
                             </div>
@@ -263,11 +263,11 @@ export function BlogFeedSection() {
                     );
                   })
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-24 border border-dashed border-white/10 rounded-xl bg-white/5">
-                    <div className="w-16 h-16 bg-neutral-800 rounded-full flex items-center justify-center mb-4">
-                      <Search className="w-6 h-6 text-slate-500" />
+                  <div className="flex flex-col items-center justify-center py-24 border border-dashed border-slate-300 dark:border-white/10 rounded-xl bg-slate-50 dark:bg-white/5">
+                    <div className="w-16 h-16 bg-slate-200 dark:bg-neutral-800 rounded-full flex items-center justify-center mb-4">
+                      <Search className="w-6 h-6 text-slate-500 dark:text-slate-500" />
                     </div>
-                    <p className="text-slate-300 text-lg font-medium mb-1">
+                    <p className="text-slate-700 dark:text-slate-300 text-lg font-medium mb-1">
                       No briefings found
                     </p>
                     <button
@@ -288,7 +288,7 @@ export function BlogFeedSection() {
                 <div className="pt-12 flex justify-center">
                   <Link
                     href="/news"
-                    className="inline-flex items-center gap-2 px-8 py-3 bg-neutral-900 border border-white/10 hover:border-orange-500/50 hover:text-orange-500 rounded-full text-sm font-semibold text-slate-300 transition-all duration-300 shadow-lg hover:shadow-orange-900/20"
+                    className="inline-flex items-center gap-2 px-8 py-3 bg-slate-100 dark:bg-neutral-900 border border-slate-300 dark:border-white/10 hover:border-orange-500/50 hover:text-orange-500 rounded-full text-sm font-semibold text-slate-700 dark:text-slate-300 transition-all duration-300 shadow-lg hover:shadow-orange-900/20"
                   >
                     View All Briefings <ArrowRight className="w-4 h-4" />
                   </Link>

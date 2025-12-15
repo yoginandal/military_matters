@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Base page background & text - LIGHT THEME */
+  /* Base page background & text - LIGHT THEME (DEFAULT) */
   --background: #ffffff;
   --foreground: #1f2937; /* dark gray for text on light backgrounds */
 
@@ -27,6 +27,29 @@
   --military-red-dark: #c2410c; /* deeper alert / hover state */
 }
 
+.dark {
+  /* Base page background & text - DARK THEME */
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  /* Dark backgrounds */
+  --military-charcoal: #0f172a; /* dark slate background */
+  --military-charcoal-light: #1e293b; /* slightly lighter dark slate */
+
+  /* Primary brand oranges (same in dark mode) */
+  --military-army-green: #fe5722;
+  --military-forest-green: #f44009;
+
+  /* Soft supporting tones for dark mode */
+  --military-brown: #7c2d12; /* darker brown for dark mode accents */
+  --military-khaki: #e5e7eb; /* light gray for primary text on dark backgrounds */
+
+  /* Cool complementary + status colors */
+  --military-blue: #94a3b8; /* lighter gray for subtle accents in dark mode */
+  --military-red: #f97316;
+  --military-red-dark: #c2410c;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -45,12 +68,7 @@
   --color-military-red-dark: var(--military-red-dark);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Removed prefers-color-scheme media query - we control theme via class only */
 
 body {
   background: var(--background);

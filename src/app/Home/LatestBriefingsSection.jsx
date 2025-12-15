@@ -74,9 +74,9 @@ export function LatestBriefingsSection() {
   const rightSideBlogs = blogs.slice(3, 6);
 
   return (
-    <section className="relative bg-neutral-900 py-20 lg:py-28 overflow-hidden border-t border-white/5">
+    <section className="relative bg-white dark:bg-neutral-900 py-20 lg:py-28 overflow-hidden border-t border-slate-200 dark:border-white/5">
       {/* --- Background Elements (Same as Hero) --- */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
       {/* Blue glow on left to differentiate slightly from hero */}
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-3xl -translate-y-1/2" />
 
@@ -87,13 +87,13 @@ export function LatestBriefingsSection() {
             <span className="text-orange-500 font-mono text-sm tracking-widest uppercase">
               // Intel Feed
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-2">
               Latest Briefings
             </h2>
           </div>
           <Link
             href="/news"
-            className="hidden md:flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium"
+            className="hidden md:flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-medium"
           >
             View All Archives <ArrowRight className="w-4 h-4" />
           </Link>
@@ -115,18 +115,18 @@ export function LatestBriefingsSection() {
 
           {/* 2. CENTER COLUMN (Active Main View) */}
           <div className="lg:col-span-6 h-full min-h-[400px]">
-            <div className="relative h-full rounded-2xl overflow-hidden border border-white/10 bg-neutral-800/50 backdrop-blur-sm group">
+            <div className="relative h-full rounded-2xl overflow-hidden border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-neutral-800/50 backdrop-blur-sm group">
               {/* Background Image with Fade Transition key */}
               <div
                 key={activeBlog.id}
                 className="absolute inset-0 animate-in fade-in duration-700"
               >
                 {/* Placeholder for image - using gray div if no image provided */}
-                <div className="absolute inset-0 bg-neutral-800" />
+                <div className="absolute inset-0 bg-slate-200 dark:bg-neutral-800" />
                 {/* <img src={activeBlog.image} alt={activeBlog.title} className="w-full h-full object-cover opacity-60" /> */}
 
                 {/* Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-900/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 dark:from-neutral-950 via-slate-800/60 dark:via-neutral-900/60 to-transparent" />
               </div>
 
               {/* Content Overlay */}
@@ -144,13 +144,13 @@ export function LatestBriefingsSection() {
                     {activeBlog.title}
                   </h3>
 
-                  <p className="text-slate-300 text-lg mb-8 line-clamp-3 max-w-2xl">
+                  <p className="text-slate-200 dark:text-slate-300 text-lg mb-8 line-clamp-3 max-w-2xl">
                     {activeBlog.excerpt}
                   </p>
 
                   <Link
                     href={`/news/${activeBlog.id}`}
-                    className="inline-flex items-center gap-3 px-6 py-3 bg-white text-neutral-900 rounded-lg font-bold hover:bg-orange-500 hover:text-white transition-all duration-300"
+                    className="inline-flex items-center gap-3 px-6 py-3 bg-white dark:bg-white text-slate-900 dark:text-neutral-900 rounded-lg font-bold hover:bg-orange-500 hover:text-white transition-all duration-300"
                   >
                     Read Full Briefing
                     <ArrowRight className="w-5 h-5" />
@@ -160,7 +160,7 @@ export function LatestBriefingsSection() {
 
               {/* Decorative top-right corner */}
               <div className="absolute top-4 right-4">
-                <Target className="w-6 h-6 text-white/20" />
+                <Target className="w-6 h-6 text-slate-400 dark:text-white/20" />
               </div>
             </div>
           </div>
@@ -200,8 +200,8 @@ function SideTab({ blog, isActive, onClick }) {
       className={`flex-1 w-full text-left p-5 rounded-xl border transition-all duration-300 group relative overflow-hidden flex flex-col justify-center
         ${
           isActive
-            ? "bg-neutral-800 border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.1)]"
-            : "bg-neutral-800/30 border-white/5 hover:bg-neutral-800 hover:border-white/10"
+            ? "bg-slate-100 dark:bg-neutral-800 border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.1)]"
+            : "bg-slate-50 dark:bg-neutral-800/30 border-slate-300 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-neutral-800 hover:border-slate-400 dark:hover:border-white/10"
         }
       `}
     >
@@ -213,12 +213,12 @@ function SideTab({ blog, isActive, onClick }) {
       <div className="flex justify-between items-start mb-2">
         <span
           className={`text-xs font-mono uppercase tracking-wider ${
-            isActive ? "text-orange-400" : "text-slate-500"
+            isActive ? "text-orange-500 dark:text-orange-400" : "text-slate-500 dark:text-slate-500"
           }`}
         >
           {blog.category}
         </span>
-        <div className="flex items-center gap-1 text-slate-600 text-xs">
+        <div className="flex items-center gap-1 text-slate-600 dark:text-slate-600 text-xs">
           <Clock className="w-3 h-3" />
           {blog.date}
         </div>
@@ -226,7 +226,7 @@ function SideTab({ blog, isActive, onClick }) {
 
       <h4
         className={`font-semibold text-sm leading-snug line-clamp-2 ${
-          isActive ? "text-white" : "text-slate-400 group-hover:text-slate-200"
+          isActive ? "text-slate-900 dark:text-white" : "text-slate-700 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200"
         }`}
       >
         {blog.title}

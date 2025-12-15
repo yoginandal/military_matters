@@ -24,10 +24,10 @@ const CollapsibleNavItem = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-lg font-bold text-slate-200 transition-all hover:bg-white/5">
+      <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-lg font-bold text-slate-700 dark:text-slate-200 transition-all hover:bg-slate-100 dark:hover:bg-white/5">
         <span>{item.name}</span>
         <ChevronRight
-          className={`h-6 w-6 text-amber-400 transition-transform duration-200 ${
+          className={`h-6 w-6 text-orange-500 dark:text-amber-400 transition-transform duration-200 ${
             isOpen ? "rotate-90" : ""
           }`}
           aria-hidden="true"
@@ -35,7 +35,7 @@ const CollapsibleNavItem = ({ item }) => {
       </CollapsibleTrigger>
       <CollapsibleContent>
         <ul
-          className="mt-2 space-y-1 border-l-2 border-slate-700 pl-6"
+          className="mt-2 space-y-1 border-l-2 border-slate-300 dark:border-slate-700 pl-6"
           role="list"
         >
           {item.dropdown?.map((subItem) => (
@@ -43,7 +43,7 @@ const CollapsibleNavItem = ({ item }) => {
               <SheetClose asChild>
                 <Link
                   href={subItem.path}
-                  className="block rounded-md px-4 py-2.5 text-base text-slate-300 transition-all hover:bg-white/5 hover:text-amber-400"
+                  className="block rounded-md px-4 py-2.5 text-base text-slate-600 dark:text-slate-300 transition-all hover:bg-slate-100 dark:hover:bg-white/5 hover:text-orange-500 dark:hover:text-amber-400"
                 >
                   {subItem.name}
                 </Link>
@@ -61,12 +61,12 @@ const Drawer = () => {
     <Sheet>
       <SheetTrigger
         aria-label="Open navigation menu"
-        className="group flex items-center gap-1 rounded-lg border border-white/20 bg-white/10 p-2.5 text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400"
+        className="group flex items-center gap-1 rounded-lg border border-slate-300 dark:border-white/20 bg-slate-100 dark:bg-white/10 p-2.5 text-slate-900 dark:text-white transition-all hover:bg-slate-200 dark:hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-orange-400 dark:focus:ring-amber-400"
       >
         <Menu className="h-7 w-7" aria-hidden="true" />
       </SheetTrigger>
-      <SheetContent className="flex w-full flex-col overflow-y-auto border-l-2 border-slate-700 bg-slate-900 bg-[url('/noise.png')] text-white sm:w-96">
-        <SheetHeader className="border-b border-white/10 pb-4">
+      <SheetContent className="flex w-full flex-col overflow-y-auto border-l-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 bg-[url('/noise.png')] text-slate-900 dark:text-white sm:w-96">
+        <SheetHeader className="border-b border-slate-200 dark:border-white/10 pb-4">
           <div className="mb-4 flex items-center gap-4">
             <Image
               src="/logo.png"
@@ -76,7 +76,7 @@ const Drawer = () => {
               className="h-16 w-16 object-contain"
               priority
             />
-            <SheetTitle className="text-2xl font-bold text-white">
+            <SheetTitle className="text-2xl font-bold text-slate-900 dark:text-white">
               Military Matters 24/7
             </SheetTitle>
           </div>
@@ -92,7 +92,7 @@ const Drawer = () => {
                     <SheetClose asChild>
                       <Link
                         href={item.path}
-                        className="group flex w-full items-center rounded-lg px-4 py-3 text-left text-lg font-bold text-slate-200 transition-all hover:bg-white/5 border-l-4 border-transparent hover:border-amber-400"
+                        className="group flex w-full items-center rounded-lg px-4 py-3 text-left text-lg font-bold text-slate-700 dark:text-slate-200 transition-all hover:bg-slate-100 dark:hover:bg-white/5 border-l-4 border-transparent hover:border-orange-500 dark:hover:border-amber-400"
                       >
                         {item.name}
                       </Link>

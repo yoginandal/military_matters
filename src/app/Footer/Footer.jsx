@@ -54,8 +54,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-neutral-800 bg-neutral-900">
-      <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-8 text-white sm:px-6 lg:px-8">
+    <footer className="relative overflow-hidden border-t border-slate-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
+      <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-8 text-slate-900 dark:text-white sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-y-12 gap-x-10 md:grid-cols-2 lg:grid-cols-12 pb-12">
           {/* Logo + mission + social */}
           <div className="space-y-8 lg:col-span-4">
@@ -74,12 +74,12 @@ export default function Footer() {
                   priority
                 />
               </div>
-              <span className="text-left text-lg font-bold tracking-wider text-white">
+              <span className="text-left text-lg font-bold tracking-wider text-slate-900 dark:text-white">
                 Military Matters 24/7
               </span>
             </button>
 
-            <p className="max-w-md text-base leading-relaxed text-slate-300">
+            <p className="max-w-md text-base leading-relaxed text-slate-600 dark:text-slate-300">
               Indian defence news, strategy and veteran perspectives — focused
               on clarity, capability and the realities of modern warfare.
             </p>
@@ -97,12 +97,12 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-neutral-900"
+                  className="rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-neutral-900"
                 >
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="rounded-full bg-white/5 text-white transition-all hover:scale-110 hover:bg-orange-500 hover:text-neutral-900"
+                    className="rounded-full bg-slate-100 dark:bg-white/5 text-slate-900 dark:text-white transition-all hover:scale-110 hover:bg-orange-500 hover:text-white"
                     aria-label={social.label}
                   >
                     <social.icon className="h-5 w-5" />
@@ -116,7 +116,7 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-8 md:col-span-1 md:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
             {footerSections.map((section) => (
               <div key={section.label} className="space-y-5">
-                <h3 className="text-base font-bold uppercase tracking-wider text-orange-400">
+                <h3 className="text-base font-bold uppercase tracking-wider text-orange-500 dark:text-orange-400">
                   {section.label}
                 </h3>
                 <ul className="space-y-3 text-base">
@@ -124,7 +124,7 @@ export default function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.path}
-                        className="inline-block text-slate-300 transition-colors hover:text-white hover:underline decoration-orange-400 underline-offset-4"
+                        className="inline-block text-slate-600 dark:text-slate-300 transition-colors hover:text-slate-900 dark:hover:text-white hover:underline decoration-orange-500 dark:decoration-orange-400 underline-offset-4"
                       >
                         {item.name}
                       </Link>
@@ -138,12 +138,12 @@ export default function Footer() {
 
         {/* Separator */}
         <div className="pt-8 pb-6">
-          <Separator className="h-px w-full bg-white/10" />
+          <Separator className="h-px w-full bg-slate-200 dark:bg-white/10" />
         </div>
 
         {/* Copyright */}
-        <div className="flex flex-col items-center justify-between gap-4 pt-2 text-sm text-slate-400 sm:flex-row">
-          <p className="font-semibold text-slate-200">
+        <div className="flex flex-col items-center justify-between gap-4 pt-2 text-sm text-slate-500 dark:text-slate-400 sm:flex-row">
+          <p className="font-semibold text-slate-700 dark:text-slate-200">
             © {new Date().getFullYear()} Military Matters 24/7. All rights
             reserved.
           </p>
