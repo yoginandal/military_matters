@@ -45,12 +45,12 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative bg-white dark:bg-neutral-900 overflow-hidden">
+    <section className="relative bg-white dark:bg-neutral-950 overflow-hidden">
       {/* Subtle grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px]" />
 
       {/* Orange glow accent */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-500/10 dark:bg-orange-500/5 rounded-full blur-3xl" />
 
       <div className="relative max-w-7xl mx-auto px-4 py-24 lg:py-36">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -59,18 +59,20 @@ export function HeroSection() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
               <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-              <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">
+              <span className="text-sm text-slate-700 dark:text-slate-200 font-medium">
                 Breaking Defence Updates
               </span>
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6 text-slate-900 dark:text-white tracking-tight">
               Indian Defence News,{" "}
-              <span className="text-orange-500 dark:text-orange-400">Strategy</span> & Veteran
-              Stories
+              <span className="text-orange-600 dark:text-orange-400">
+                Strategy
+              </span>{" "}
+              & Veteran Stories
             </h1>
 
-            <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed max-w-xl">
+            <p className="text-lg text-slate-700 dark:text-slate-300 mb-10 leading-relaxed max-w-xl">
               Focused on clarity, capability and the realities of modern
               warfare. Your trusted source for comprehensive defence analysis
               and veteran perspectives.
@@ -80,7 +82,7 @@ export function HeroSection() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/news"
-                className="inline-flex items-center gap-2 bg-orange-500 text-white px-7 py-3.5 rounded-lg font-semibold hover:bg-orange-600 transition-all duration-300 shadow-lg shadow-orange-500/25"
+                className="inline-flex items-center gap-2 bg-orange-600 text-white px-7 py-3.5 rounded-lg font-semibold hover:bg-orange-700 transition-all duration-300 shadow-lg shadow-orange-500/25"
               >
                 Explore Briefings
                 <ArrowRight className="w-4 h-4" />
@@ -109,8 +111,10 @@ export function HeroSection() {
                 </div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-orange-500 dark:text-orange-400">24/7</div>
-                <div className="text-sm text-slate-600 dark:text-slate-500 mt-1">
+                <div className="text-4xl font-bold text-orange-600 dark:text-orange-400">
+                  24/7
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">
                   Defence Coverage
                 </div>
               </div>
@@ -156,7 +160,7 @@ export function HeroSection() {
                     onClick={() => setCurrentSlide(index)}
                     className={`h-1 rounded-full transition-all duration-300 ${
                       index === currentSlide
-                        ? "w-8 bg-orange-500"
+                        ? "w-8 bg-orange-600"
                         : "w-2 bg-slate-400 dark:bg-white/30 hover:bg-slate-500 dark:hover:bg-white/50"
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
@@ -165,26 +169,23 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Floating Card - Fixed on top of slider */}
-            <div className="absolute -bottom-6 -left-6 bg-white dark:bg-neutral-800 border border-slate-300 dark:border-white/10 rounded-xl p-5 shadow-2xl max-w-xs hidden lg:block z-30">
+            <div className="absolute -bottom-6 -left-6 bg-white dark:bg-neutral-900 border border-slate-300 dark:border-white/10 rounded-xl p-5 shadow-2xl max-w-xs hidden lg:block z-30">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <ShieldAlert className="w-6 h-6 text-orange-500 dark:text-orange-400" />
+                  <ShieldAlert className="w-6 h-6 text-orange-600 dark:text-orange-400" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-slate-900 dark:text-white text-sm">
                     Latest Analysis
                   </h4>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                    New strategic briefing on Indo-Pacific security
-                    architecture.
+                    New strategic briefing on Indo-Pacific security architecture.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Top right badge */}
-            <div className="absolute -top-3 -right-3 bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg hidden lg:block z-30">
+            <div className="absolute -top-3 -right-3 bg-orange-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg hidden lg:block z-30">
               LIVE
             </div>
           </div>
