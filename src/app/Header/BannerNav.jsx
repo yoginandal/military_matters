@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 export default function BannerNav() {
   return (
     <nav
-      className="w-full bg-white dark:bg-neutral-900 py-3 px-4 sm:px-6"
+      className="w-full background-gradient-white py-3 px-4 sm:px-6"
       aria-label="Main navigation"
     >
       <div className="container mx-auto flex justify-between items-center">

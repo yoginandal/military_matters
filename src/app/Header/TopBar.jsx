@@ -17,11 +17,11 @@ const TopBar = () => {
       className="hidden w-full px-5 sm:px-8 py-2 md:block border-b border-slate-200 dark:border-white/10"
       aria-label="Top bar"
     >
-      <div className="flex flex-wrap items-center justify-between mx-auto text-sm text-slate-900 dark:text-white">
+      <div className="flex flex-wrap items-center justify-between mx-auto text-sm text-white">
         {/* Social Links */}
         <nav aria-label="Social media links">
           <div className="flex items-center gap-3">
-            <span className="font-semibold text-slate-700 dark:text-slate-100">Follow:</span>
+            <span className="font-semibold text-slate-100">Follow:</span>
             <div className="flex gap-1" role="list">
               {socialIcons.map((item, index) => (
                 <a
@@ -31,7 +31,7 @@ const TopBar = () => {
                   rel="noopener noreferrer"
                   aria-label={item.label}
                   role="listitem"
-                  className="p-2 rounded-full text-slate-700 dark:text-slate-100 transition-all duration-300 hover:text-orange-500 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-white/10"
+                  className="p-2 rounded-full text-slate-100 transition-all duration-300 hover:text-orange-500  hover:bg-slate-100 "
                 >
                   <item.icon className="w-5 h-5" aria-hidden="true" />
                 </a>

@@ -88,7 +88,7 @@ export function BlogFeedSection() {
     : filteredPosts;
 
   return (
-    <section className="relative bg-white dark:bg-[#0a0a0a] w-full border-t border-slate-200 dark:border-white/5">
+    <section className="relative bg-[#C3C6CA] dark:bg-[#0a0a0a] w-full border-t border-slate-200 dark:border-white/5">
       {/* --- Background Wrapper (Handles Overflow separately) --- */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(#000000_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />

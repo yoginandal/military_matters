@@ -8,13 +8,19 @@ export function ArticleCard({ post }) {
     <div className="group bg-white dark:bg-neutral-900 border-2 border-slate-300 dark:border-white/10 rounded-2xl p-4 flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#f97316] hover:border-orange-500 h-full">
       {/* Image Area */}
       <div className="aspect-[4/3] bg-slate-200 dark:bg-neutral-800 rounded-xl border border-slate-300 dark:border-white/5 overflow-hidden mb-5 relative">
-        {/* If you have real images, uncomment Image component. Using div placeholder for now. */}
+        <Image
+          src={post.image}
+          alt={post.title}
+          fill
+          className="object-cover"
+        />
+
+        {/* Optional color overlay */}
         <div
           className={`absolute inset-0 opacity-20 ${
             post.color || "bg-slate-700"
           }`}
         />
-        {/* <Image src={post.image} alt={post.title} fill className="object-cover" /> */}
 
         {/* Category Tag */}
         <div className="absolute top-3 left-3">
@@ -34,7 +40,7 @@ export function ArticleCard({ post }) {
         </h3>
       </div>
 
-      {/* Footer Actions (Pills) */}
+      {/* Footer Actions */}
       <div className="mt-auto flex items-center justify-between gap-2 pt-4 border-t border-slate-200 dark:border-white/5">
         <div className="flex gap-2">
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-xs text-slate-700 dark:text-slate-300 font-medium group-hover:border-orange-500/30 transition-colors">

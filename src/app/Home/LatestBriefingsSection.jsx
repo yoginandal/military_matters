@@ -4,14 +4,15 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Clock, ChevronRight, Target } from "lucide-react";
 
-// Mock Data: 6 Latest Blogs
+// Mock Data: 6 Latest Blogs (all with Unsplash images)
 const blogs = [
   {
     id: 1,
     title: "Agni-V Test Firing: Strategic Implications",
     category: "Missile Tech",
     date: "2 Hours Ago",
-    image: "/missile-launch.jpg", // Replace with real image
+    image:
+      "https://images.unsplash.com/photo-1748653755322-30fe8248803c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     excerpt:
       "Analysis of the latest MIRV technology demonstration and what it means for regional deterrence stability.",
   },
@@ -20,7 +21,8 @@ const blogs = [
     title: "Indian Navy's New Carrier Battle Group",
     category: "Naval Power",
     date: "5 Hours Ago",
-    image: "/carrier.jpg",
+    image:
+      "https://images.unsplash.com/photo-1542876975-6334b6aeb70d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     excerpt:
       "INS Vikrant leads the largest naval exercise in the Arabian Sea with dual-carrier operations.",
   },
@@ -29,7 +31,8 @@ const blogs = [
     title: "LCA Tejas Mk2: Production Timeline Update",
     category: "Air Force",
     date: "1 Day Ago",
-    image: "/tejas-jet.jpg",
+    image:
+      "https://images.unsplash.com/photo-1629793168399-1b028d0df502?q=80&w=1124&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     excerpt:
       "HAL confirms the rollout schedule for the new medium-weight fighter jet prototype.",
   },
@@ -38,7 +41,8 @@ const blogs = [
     title: "Border Infrastructure Push in Ladakh",
     category: "Land Forces",
     date: "1 Day Ago",
-    image: "/ladakh-road.jpg",
+    image:
+      "https://images.unsplash.com/photo-1605588649874-94991ea8316f?q=80&w=1056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     excerpt:
       "BRO completes strategic tunnel providing all-weather connectivity to forward areas.",
   },
@@ -47,7 +51,8 @@ const blogs = [
     title: "Cyber Warfare Command Structure",
     category: "Cyber & EW",
     date: "2 Days Ago",
-    image: "/cyber-ops.jpg",
+    image:
+      "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=1600&q=80",
     excerpt:
       "New organizational changes announced to bolster defense against state-sponsored cyber attacks.",
   },
@@ -56,53 +61,62 @@ const blogs = [
     title: "Indigenous Drone Swarm Capabilities",
     category: "Future Tech",
     date: "3 Days Ago",
-    image: "/drones.jpg",
+    image:
+      "https://plus.unsplash.com/premium_photo-1661875342092-33c91bdf33c1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     excerpt:
       "Private sector collaboration yields first successful test of autonomous swarming munition systems.",
   },
 ];
 
 export function LatestBriefingsSection() {
-  // Default to the first blog active
   const [activeId, setActiveId] = useState(blogs[0].id);
 
-  // Find the currently active blog object
   const activeBlog = blogs.find((b) => b.id === activeId) || blogs[0];
-
-  // Split data for Left and Right columns
   const leftSideBlogs = blogs.slice(0, 3);
   const rightSideBlogs = blogs.slice(3, 6);
 
   return (
-    <section className="relative bg-white dark:bg-neutral-900 py-20 lg:py-28 overflow-hidden border-t border-slate-200 dark:border-white/5">
-      {/* --- Background Elements (Same as Hero) --- */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
-      {/* Blue glow on left to differentiate slightly from hero */}
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-3xl -translate-y-1/2" />
+    <section className="relative overflow-hidden border-t border-slate-200 bg-white py-14 lg:pt-12 lg:pb-20 dark:border-white/5 dark:bg-neutral-950">
+      {/* Clean background for readability */}
+      <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-white to-slate-50 dark:from-neutral-950 dark:to-neutral-950" />
 
-      <div className="relative max-w-7xl mx-auto px-4">
+      {/* Ultra-subtle grid */}
+      <div
+        className="
+          pointer-events-none absolute inset-0 z-0
+          bg-[linear-gradient(rgba(0,0,0,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.025)_1px,transparent_1px)]
+          dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)]
+          bg-[size:80px_80px]
+        "
+      />
+
+      {/* Left glow */}
+      <div className="pointer-events-none absolute top-1/2 left-0 z-0 h-[520px] w-[520px] -translate-y-1/2 rounded-full bg-blue-600/8 blur-3xl dark:bg-blue-600/5" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4">
         {/* Section Header */}
-        <div className="flex items-end justify-between mb-12">
+        <div className="mb-8 flex items-end justify-between">
           <div>
-            <span className="text-orange-500 font-mono text-sm tracking-widest uppercase">
+            <span className="font-mono text-sm tracking-widest uppercase text-orange-600 dark:text-orange-400">
               // Intel Feed
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-2">
+            <h2 className="mt-2 text-3xl font-bold text-slate-900 dark:text-white md:text-4xl">
               Latest Briefings
             </h2>
           </div>
+
           <Link
             href="/news"
-            className="hidden md:flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-medium"
+            className="hidden md:flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-400 dark:hover:text-white"
           >
-            View All Archives <ArrowRight className="w-4 h-4" />
+            View All Archives <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
-        {/* --- The 3-Column Layout --- */}
-        <div className="grid lg:grid-cols-12 gap-6 lg:h-[600px]">
-          {/* 1. LEFT COLUMN (Tabs 1-3) */}
-          <div className="lg:col-span-3 flex flex-col gap-4 h-full">
+        {/* 3-Column Layout */}
+        <div className="grid gap-6 lg:grid-cols-12 lg:h-[600px]">
+          {/* Left Tabs */}
+          <div className="flex h-full flex-col gap-4 lg:col-span-3">
             {leftSideBlogs.map((blog) => (
               <SideTab
                 key={blog.id}
@@ -113,60 +127,64 @@ export function LatestBriefingsSection() {
             ))}
           </div>
 
-          {/* 2. CENTER COLUMN (Active Main View) */}
-          <div className="lg:col-span-6 h-full min-h-[400px]">
-            <div className="relative h-full rounded-2xl overflow-hidden border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-neutral-800/50 backdrop-blur-sm group">
-              {/* Background Image with Fade Transition key */}
+          {/* Center Active Panel */}
+          <div className="h-full min-h-[420px] lg:col-span-6">
+            <div className="group relative h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl dark:border-white/10 dark:bg-neutral-900/60">
+              {/* Background media layer */}
               <div
                 key={activeBlog.id}
                 className="absolute inset-0 animate-in fade-in duration-700"
               >
-                {/* Placeholder for image - using gray div if no image provided */}
-                <div className="absolute inset-0 bg-slate-200 dark:bg-neutral-800" />
-                {/* <img src={activeBlog.image} alt={activeBlog.title} className="w-full h-full object-cover opacity-60" /> */}
+                <div className="absolute inset-0">
+                  <img
+                    src={activeBlog.image}
+                    alt={activeBlog.title}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
 
-                {/* Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 dark:from-neutral-950 via-slate-800/60 dark:via-neutral-900/60 to-transparent" />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent dark:from-black dark:via-neutral-950/60" />
               </div>
 
-              {/* Content Overlay */}
-              <div className="absolute inset-0 p-8 flex flex-col justify-end items-start z-10">
-                {/* Animated Key for text refresh */}
+              {/* Content */}
+              <div className="absolute inset-0 z-10 flex flex-col items-start justify-end p-6 md:p-8">
                 <div
-                  key={activeBlog.id + "text"}
+                  key={activeBlog.id + "-text"}
                   className="animate-in slide-in-from-bottom-4 duration-500"
                 >
-                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-full mb-4">
+                  <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-orange-600 px-3 py-1 text-xs font-bold text-white dark:bg-orange-500">
                     {activeBlog.category}
                   </div>
 
-                  <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                  <h3 className="mb-4 text-3xl font-bold leading-tight text-white md:text-4xl">
                     {activeBlog.title}
                   </h3>
 
-                  <p className="text-slate-200 dark:text-slate-300 text-lg mb-8 line-clamp-3 max-w-2xl">
+                  <p className="mb-7 max-w-2xl line-clamp-3 text-lg text-slate-200">
                     {activeBlog.excerpt}
                   </p>
 
                   <Link
                     href={`/news/${activeBlog.id}`}
-                    className="inline-flex items-center gap-3 px-6 py-3 bg-white dark:bg-white text-slate-900 dark:text-neutral-900 rounded-lg font-bold hover:bg-orange-500 hover:text-white transition-all duration-300"
+                    className="inline-flex items-center gap-3 rounded-lg bg-white px-6 py-3 font-bold text-slate-900 transition-all duration-300 hover:bg-orange-600 hover:text-white dark:bg-white dark:text-neutral-900"
                   >
                     Read Full Briefing
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="h-5 w-5" />
                   </Link>
                 </div>
               </div>
 
-              {/* Decorative top-right corner */}
-              <div className="absolute top-4 right-4">
-                <Target className="w-6 h-6 text-slate-400 dark:text-white/20" />
+              {/* Decorative icon */}
+              <div className="absolute right-4 top-4 z-10">
+                <Target className="h-6 w-6 text-slate-500/50 dark:text-white/20" />
               </div>
             </div>
           </div>
 
-          {/* 3. RIGHT COLUMN (Tabs 4-6) */}
-          <div className="lg:col-span-3 flex flex-col gap-4 h-full">
+          {/* Right Tabs */}
+          <div className="flex h-full flex-col gap-4 lg:col-span-3">
             {rightSideBlogs.map((blog) => (
               <SideTab
                 key={blog.id}
@@ -178,13 +196,13 @@ export function LatestBriefingsSection() {
           </div>
         </div>
 
-        {/* Mobile Only Footer Link */}
-        <div className="mt-8 md:hidden text-center">
+        {/* Mobile Footer Link */}
+        <div className="mt-8 text-center md:hidden">
           <Link
             href="/news"
-            className="text-orange-500 font-medium text-sm flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400"
           >
-            View All Archives <ArrowRight className="w-4 h-4" />
+            View All Archives <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </div>
@@ -192,55 +210,73 @@ export function LatestBriefingsSection() {
   );
 }
 
-// --- Sub Component for the Side Tabs ---
 function SideTab({ blog, isActive, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`flex-1 w-full text-left p-5 rounded-xl border transition-all duration-300 group relative overflow-hidden flex flex-col justify-center
-        ${
-          isActive
-            ? "bg-slate-100 dark:bg-neutral-800 border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.1)]"
-            : "bg-slate-50 dark:bg-neutral-800/30 border-slate-300 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-neutral-800 hover:border-slate-400 dark:hover:border-white/10"
-        }
-      `}
+      className={[
+        "relative flex-1 w-full overflow-hidden rounded-xl border text-left transition-all duration-300",
+        "flex flex-col group",
+        isActive
+          ? "border-orange-500/50 bg-white shadow-[0_0_20px_rgba(249,115,22,0.12)] dark:bg-neutral-900 dark:border-orange-500/40"
+          : "border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 dark:border-white/10 dark:bg-neutral-900/40 dark:hover:bg-neutral-900/70 dark:hover:border-white/15",
+      ].join(" ")}
     >
-      {/* Active Indicator Line */}
+      {/* Thumbnail image (same image as hero) */}
+      <div className="relative mb-3 h-28 w-full overflow-hidden rounded-lg bg-slate-200 dark:bg-neutral-800">
+        <img
+          src={blog.image}
+          alt={blog.title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Active indicator */}
       {isActive && (
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-orange-500" />
       )}
 
-      <div className="flex justify-between items-start mb-2">
+      <div className="mb-2 flex items-start justify-between px-5">
         <span
-          className={`text-xs font-mono uppercase tracking-wider ${
-            isActive ? "text-orange-500 dark:text-orange-400" : "text-slate-500 dark:text-slate-500"
-          }`}
+          className={[
+            "text-xs font-mono uppercase tracking-wider",
+            isActive
+              ? "text-orange-600 dark:text-orange-400"
+              : "text-slate-600 dark:text-slate-400",
+          ].join(" ")}
         >
           {blog.category}
         </span>
-        <div className="flex items-center gap-1 text-slate-600 dark:text-slate-600 text-xs">
-          <Clock className="w-3 h-3" />
+
+        <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
+          <Clock className="h-3 w-3" />
           {blog.date}
         </div>
       </div>
 
-      <h4
-        className={`font-semibold text-sm leading-snug line-clamp-2 ${
-          isActive ? "text-slate-900 dark:text-white" : "text-slate-700 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200"
-        }`}
-      >
-        {blog.title}
-      </h4>
+      <div className="px-5 pb-5 pt-1">
+        <h4
+          className={[
+            "line-clamp-2 text-sm font-semibold leading-snug transition-colors",
+            isActive
+              ? "text-slate-900 dark:text-white"
+              : "text-slate-700 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-white",
+          ].join(" ")}
+        >
+          {blog.title}
+        </h4>
+      </div>
 
-      {/* Hover Arrow */}
       <div
-        className={`absolute right-3 bottom-3 transition-all duration-300 ${
+        className={[
+          "absolute right-3 bottom-3 transition-all duration-300",
           isActive
             ? "opacity-100 translate-x-0"
-            : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"
-        }`}
+            : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0",
+        ].join(" ")}
       >
-        <ChevronRight className="w-4 h-4 text-orange-500" />
+        <ChevronRight className="h-4 w-4 text-orange-500" />
       </div>
     </button>
   );

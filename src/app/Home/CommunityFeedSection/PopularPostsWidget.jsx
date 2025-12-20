@@ -1,27 +1,32 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 const popularPosts = [
   {
     id: 1,
     title: "Zero-Day Vulnerabilities in Satellite Comms",
-    image: "/satellite-hack.jpg",
+    image:
+      "https://images.unsplash.com/photo-1653681963850-531767705d88?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 2,
     title: "5 Trends in Hypersonic Defense Systems",
-    image: "/hypersonic.jpg",
+    image:
+      "https://images.unsplash.com/photo-1756929702844-6bd4cd45f9cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 3,
     title: "Why Autonomous Wingmen Are the Future",
-    image: "/drone.jpg",
+    image:
+      "https://images.unsplash.com/photo-1748367177514-ff43efb5412e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 4,
     title: "The Shift to Cognitive Warfare Tactics",
-    image: "/cognitive.jpg",
+    image:
+      "https://images.unsplash.com/photo-1647606375662-54a75ff3a931?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDV8fG1pbGl0YXJ5JTIwdGFjdGljc3xlbnwwfHwwfHx8Mg%3D%3D",
   },
 ];
 
@@ -40,7 +45,12 @@ export function PopularPostsWidget() {
           <div key={item.id} className="flex gap-4 group cursor-pointer">
             {/* Thumbnail */}
             <div className="w-16 h-16 bg-slate-200 dark:bg-neutral-800 rounded-lg border border-slate-300 dark:border-white/10 overflow-hidden shrink-0 group-hover:border-orange-500/50 transition-colors relative">
-              {/* <Image src={item.image} alt={item.title} fill className="object-cover" /> */}
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover"
+              />
             </div>
 
             {/* Title */}

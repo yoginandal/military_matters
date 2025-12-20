@@ -1,55 +1,139 @@
 @import "tailwindcss";
 
+@plugin "tailwindcss-animate";
+@import "tw-animate-css";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Base page background & text - LIGHT THEME (DEFAULT) */
-  --background: #ffffff;
-  --foreground: #1f2937; /* dark gray for text on light backgrounds */
+  /* =========================================================
+     GLOBAL SITE BACKGROUND IMAGE (LIGHT MODE)
+     ========================================================= */
 
-  /* Brand Palette - Light Orange & White Theme */
-  /* We keep the existing "military-*" token names so all current utility classes continue to work,
-     but the actual colors are now light orange/white with dark text. */
+  --site-bg-image: url("https://images.unsplash.com/photo-1491895200222-0fc4a4c35e18?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
 
-  /* Light backgrounds (used for page shells like /news & blog) */
-  --military-charcoal: #ffffff; /* white background */
-  --military-charcoal-light: #fef3e7; /* very light peach/cream background */
+  /* =========================================================
+     Your existing theme tokens (kept)
+     ========================================================= */
+  --military-charcoal: #ffffff;
+  --military-charcoal-light: #fef3e7;
 
-  /* Primary brand oranges */
-  --military-army-green: #fe5722; /* PRIMARY ORANGE – buttons, active states, pills */
-  --military-forest-green: #f44009; /* darker orange for hovers and stronger accents */
-
-  /* Soft supporting tones */
-  --military-brown: #fed7aa; /* warm peach border/background accents */
-  --military-khaki: #1f2937; /* dark gray for primary text on light backgrounds */
-
-  /* Cool complementary + status colors */
-  --military-blue: #4b5563; /* medium gray for subtle accents */
-  --military-red: #f97316; /* alert / live-dot orange */
-  --military-red-dark: #c2410c; /* deeper alert / hover state */
-}
-
-.dark {
-  /* Base page background & text - DARK THEME */
-  --background: #0a0a0a;
-  --foreground: #ededed;
-
-  /* Dark backgrounds */
-  --military-charcoal: #0f172a; /* dark slate background */
-  --military-charcoal-light: #1e293b; /* slightly lighter dark slate */
-
-  /* Primary brand oranges (same in dark mode) */
   --military-army-green: #fe5722;
   --military-forest-green: #f44009;
 
-  /* Soft supporting tones for dark mode */
-  --military-brown: #7c2d12; /* darker brown for dark mode accents */
-  --military-khaki: #e5e7eb; /* light gray for primary text on dark backgrounds */
+  --military-brown: #fed7aa;
+  --military-khaki: #1f2937;
 
-  /* Cool complementary + status colors */
-  --military-blue: #94a3b8; /* lighter gray for subtle accents in dark mode */
+  --military-blue: #4b5563;
   --military-red: #f97316;
   --military-red-dark: #c2410c;
+
+  --radius: 0.625rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  /* =========================================================
+     GLOBAL SITE BACKGROUND IMAGE (DARK MODE)
+     ========================================================= */
+  --site-bg-image: url("https://images.unsplash.com/photo-1715794792710-5a57e04db28f?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+
+  /* Your existing dark tokens (kept) */
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+
+  --military-charcoal: #0f172a;
+  --military-charcoal-light: #1e293b;
+
+  --military-army-green: #fe5722;
+  --military-forest-green: #f44009;
+
+  --military-brown: #7c2d12;
+  --military-khaki: #e5e7eb;
+
+  --military-blue: #94a3b8;
+  --military-red: #f97316;
+  --military-red-dark: #c2410c;
+
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+
+  --destructive: oklch(0.704 0.191 22.216);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @theme inline {
@@ -58,7 +142,6 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Military Color Palette - Tailwind Theme */
   --color-military-charcoal: var(--military-charcoal);
   --color-military-charcoal-light: var(--military-charcoal-light);
   --color-military-army-green: var(--military-army-green);
@@ -68,14 +151,46 @@
   --color-military-blue: var(--military-blue);
   --color-military-red: var(--military-red);
   --color-military-red-dark: var(--military-red-dark);
-}
 
-/* Removed prefers-color-scheme media query - we control theme via class only */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
 @keyframes scroll {
@@ -91,4 +206,42 @@ body {
   display: inline-block;
   animation: scroll 15s linear infinite;
   padding-left: 100%;
+}
+
+.background-gradient-white {
+  @apply bg-gradient-to-b from-white to-slate-100 shadow-md dark:bg-neutral-900 dark:bg-none;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    /* Keep Tailwind text color tokens */
+    @apply text-foreground;
+
+    /* Let the photo be the background */
+    background-color: transparent;
+
+    background-image: var(--site-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Parallax-like */
+    background-attachment: fixed;
+  }
+
+  /* iOS Safari: fixed background often unreliable, degrade gracefully */
+  @supports (-webkit-touch-callout: inherit) {
+    body {
+      background-attachment: scroll;
+    }
+  }
 }
