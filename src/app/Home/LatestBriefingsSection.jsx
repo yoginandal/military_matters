@@ -76,7 +76,7 @@ export function LatestBriefingsSection() {
   const rightSideBlogs = blogs.slice(3, 6);
 
   return (
-    <section className="relative overflow-hidden border-t border-slate-200 bg-white py-14 lg:pt-12 lg:pb-20 dark:border-white/5 dark:bg-neutral-950">
+    <section className="relative overflow-hidden border-t border-slate-200 bg-white py-14 lg:pt-12 lg:pb-28 dark:border-white/5 dark:bg-neutral-950">
       {/* Clean background for readability */}
       <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-white to-slate-50 dark:from-neutral-950 dark:to-neutral-950" />
 
