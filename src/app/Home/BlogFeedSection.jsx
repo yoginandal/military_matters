@@ -17,11 +17,11 @@ import {
   Filter,
   Search,
 } from "lucide-react";
-import { BLOG_POSTS, BLOG_CATEGORIES } from "@/data/blogPosts";
 
 // --- Constants ---
 const POSTS_PER_PAGE_MOBILE = 5;
 
+// map category slug -> icon
 const categoryIcons = {
   all: Globe,
   missiles: Rocket,
@@ -36,7 +36,6 @@ const categoryIcons = {
   trending: TrendingUp,
 };
 
-// Helper to format date safely
 const formatDate = (dateString) => {
   if (!dateString) return "";
   const date = new Date(dateString);
@@ -49,47 +48,110 @@ const formatDate = (dateString) => {
     .toUpperCase();
 };
 
-export function BlogFeedSection() {
+// Map WP post -> internal post object
+function mapWpPost(post, wpCategoriesById) {
+  const title = post?.title?.rendered || "Untitled";
+  const excerpt = post?.excerpt?.rendered?.replace(/<[^>]+>/g, "") || "";
+
+  const catId = post.categories?.[0] || null;
+  const wpCat = catId ? wpCategoriesById[catId] : null;
+
+  const categorySlug = wpCat?.slug || "all";
+  const categoryLabel = wpCat?.name || "General";
+
+  const imageUrl =
+    post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url || null;
+
+  const tags = post?.tags && Array.isArray(post.tags) ? post.tags : [];
+
+  return {
+    id: post.id,
+    slug: post.slug,
+    title,
+    excerpt,
+    date: post.date,
+    readTime: "5 min", // static for now
+    category: categorySlug,
+    categoryLabel,
+    imageUrl,
+    tags,
+  };
+}
+
+export function BlogFeedSection({ posts = [], categories = [] }) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobile, setIsMobile] = useState(false);
 
-  // Handle resize efficiently
+  // Map categories by id
+  const wpCategoriesById = useMemo(() => {
+    const map = {};
+    for (const c of categories) map[c.id] = c;
+    return map;
+  }, [categories]);
+
+  // Convert WP posts to internal posts array
+  const allPosts = useMemo(
+    () => posts.map((p) => mapWpPost(p, wpCategoriesById)),
+    [posts, wpCategoriesById]
+  );
+
+  // Build category filter list: "All" + categories that actually have posts
+  const blogCategories = useMemo(() => {
+    const usedSlugs = new Set(allPosts.map((p) => p.category));
+    const list = [
+      { id: "all", label: "All Briefings" },
+      { id: "trending", label: "Trending" }, // virtual filter using tag, if you want later
+    ];
+
+    categories.forEach((cat) => {
+      if (usedSlugs.has(cat.slug)) {
+        list.push({ id: cat.slug, label: cat.name });
+      }
+    });
+
+    return list;
+  }, [allPosts, categories]);
+
+  // Handle resize for mobile slice
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024); // lg breakpoint
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Filter Logic
+  // Filter logic
   const filteredPosts = useMemo(() => {
     const query = searchQuery.toLowerCase().trim();
 
-    return BLOG_POSTS.filter((post) => {
-      const matchesCategory =
-        activeFilter === "all" || post.category === activeFilter;
+    return allPosts.filter((post) => {
+      let matchesCategory = true;
+
+      if (activeFilter === "trending") {
+        // example: treat "trending" as those with tag name/slug "trending" later
+        matchesCategory = post.tags && post.tags.length > 0;
+      } else if (activeFilter !== "all") {
+        matchesCategory = post.category === activeFilter;
+      }
 
       if (!query) return matchesCategory;
 
       const matchesSearch =
         post.title.toLowerCase().includes(query) ||
-        post.excerpt.toLowerCase().includes(query) ||
-        (post.tags &&
-          post.tags.some((tag) => tag.toLowerCase().includes(query)));
+        post.excerpt.toLowerCase().includes(query);
 
       return matchesCategory && matchesSearch;
     });
-  }, [activeFilter, searchQuery]);
+  }, [activeFilter, searchQuery, allPosts]);
 
-  // Pagination/Slicing for display
   const displayPosts = isMobile
     ? filteredPosts.slice(0, POSTS_PER_PAGE_MOBILE)
     : filteredPosts;
 
   return (
-    <section className="relative bg-[#C3C6CA] dark:bg-[#13171A] w-full border-t border-slate-200 dark:border-white/5">
-      {/* --- Background Wrapper (Handles Overflow separately) --- */}
+    <section className="relative background-gradient-white dark:bg-[#13171A] w-full border-t border-slate-200 dark:border-white/5">
+      {/* Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(#000000_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-600/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3" />
@@ -98,12 +160,8 @@ export function BlogFeedSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-20 relative z-10">
         <div className="grid lg:grid-cols-12 gap-12 items-start">
-          {/* ^ items-start is CRITICAL for sticky to work if sidebar is shorter than content */}
-
-          {/* --- LEFT SIDEBAR: Filters & Navigation --- */}
+          {/* LEFT SIDEBAR */}
           <div className="lg:col-span-3 sticky top-24 self-start">
-            {/* ^ sticky top-24 self-start ensures it sticks */}
-
             <div className="space-y-8">
               {/* Header & Search */}
               <div>
@@ -126,7 +184,7 @@ export function BlogFeedSection() {
 
               {/* Categories Nav */}
               <nav className="flex lg:flex-col gap-2 overflow-x-auto pb-4 lg:pb-0 no-scrollbar">
-                {BLOG_CATEGORIES.map((cat) => {
+                {blogCategories.map((cat) => {
                   const Icon = categoryIcons[cat.id] || Globe;
                   const isActive = activeFilter === cat.id;
 
@@ -173,7 +231,7 @@ export function BlogFeedSection() {
             </div>
           </div>
 
-          {/* --- RIGHT SIDE: Blog Feed --- */}
+          {/* RIGHT: Blog Feed */}
           <div className="lg:col-span-9 min-h-[50vh]">
             <div className="space-y-8">
               {/* Feed Header */}
@@ -187,81 +245,74 @@ export function BlogFeedSection() {
                 </span>
               </div>
 
-              {/* Posts Grid */}
+              {/* Posts */}
               <div className="flex flex-col gap-8">
                 {displayPosts.length > 0 ? (
-                  displayPosts.map((post) => {
-                    const categoryLabel =
-                      BLOG_CATEGORIES.find((cat) => cat.id === post.category)
-                        ?.label || post.category;
-
-                    return (
-                      <Link
-                        key={post.slug}
-                        href={`/blog/${post.slug}`}
-                        className="block group"
-                      >
-                        <article className="grid md:grid-cols-12 gap-6 items-start">
-                          {/* Thumbnail */}
-                          <div className="md:col-span-5 relative aspect-video rounded-xl overflow-hidden bg-slate-200 dark:bg-neutral-800 border border-slate-300 dark:border-white/10 shadow-2xl">
-                            {post.imageUrl ? (
-                              <img
-                                src={post.imageUrl}
-                                alt={post.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                                loading="lazy"
-                              />
-                            ) : (
-                              <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center text-slate-600">
-                                <Globe className="w-8 h-8 opacity-20" />
-                              </div>
-                            )}
-
-                            {/* Category Badge */}
-                            <div className="absolute top-3 left-3">
-                              <span className="px-2.5 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded text-[10px] font-bold text-white uppercase tracking-wider shadow-lg">
-                                {categoryLabel}
-                              </span>
+                  displayPosts.map((post) => (
+                    <Link
+                      key={post.id}
+                      href={`/news/${post.slug}`}
+                      className="block group"
+                    >
+                      <article className="grid md:grid-cols-12 gap-6 items-start">
+                        {/* Thumbnail */}
+                        <div className="md:col-span-5 relative aspect-video rounded-xl overflow-hidden bg-slate-200 dark:bg-neutral-800 border border-slate-300 dark:border-white/10 shadow-2xl">
+                          {post.imageUrl ? (
+                            <img
+                              src={post.imageUrl}
+                              alt={post.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center text-slate-600">
+                              <Globe className="w-8 h-8 opacity-20" />
                             </div>
+                          )}
+
+                          <div className="absolute top-3 left-3">
+                            <span className="px-2.5 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded text-[10px] font-bold text-white uppercase tracking-wider shadow-lg">
+                              {post.categoryLabel}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="md:col-span-7 flex flex-col h-full py-1">
+                          <div className="flex items-center gap-3 mb-3 text-xs font-medium text-slate-600 dark:text-slate-500">
+                            <span className="text-orange-500 font-mono tracking-tight">
+                              {formatDate(post.date)}
+                            </span>
+                            <span className="w-1 h-1 rounded-full bg-slate-400 dark:bg-slate-700" />
+                            <span className="flex items-center gap-1.5">
+                              <Clock className="w-3 h-3" />{" "}
+                              {post.readTime || "5 min"}
+                            </span>
                           </div>
 
-                          {/* Content */}
-                          <div className="md:col-span-7 flex flex-col h-full py-1">
-                            <div className="flex items-center gap-3 mb-3 text-xs font-medium text-slate-600 dark:text-slate-500">
-                              <span className="text-orange-500 font-mono tracking-tight">
-                                {formatDate(post.date)}
-                              </span>
-                              <span className="w-1 h-1 rounded-full bg-slate-400 dark:bg-slate-700" />
-                              <span className="flex items-center gap-1.5">
-                                <Clock className="w-3 h-3" />{" "}
-                                {post.readTime || "5 min"}
+                          <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-orange-500 transition-colors leading-tight">
+                            {post.title}
+                          </h3>
+
+                          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2 md:line-clamp-3">
+                            {post.excerpt}
+                          </p>
+
+                          <div className="mt-auto flex items-center justify-between border-t border-slate-200 dark:border-white/5 pt-4">
+                            <div className="text-xs text-slate-600 dark:text-slate-500">
+                              By{" "}
+                              <span className="text-slate-700 dark:text-slate-300 font-medium">
+                                Defense Bureau
                               </span>
                             </div>
-
-                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-orange-500 transition-colors leading-tight">
-                              {post.title}
-                            </h3>
-
-                            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2 md:line-clamp-3">
-                              {post.excerpt}
-                            </p>
-
-                            <div className="mt-auto flex items-center justify-between border-t border-slate-200 dark:border-white/5 pt-4">
-                              <div className="text-xs text-slate-600 dark:text-slate-500">
-                                By{" "}
-                                <span className="text-slate-700 dark:text-slate-300 font-medium">
-                                  Defense Bureau
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-orange-500 transition-colors uppercase tracking-wider">
-                                Read Briefing <ArrowRight className="w-3 h-3" />
-                              </div>
+                            <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white group-hover:text-orange-500 transition-colors uppercase tracking-wider">
+                              Read Briefing <ArrowRight className="w-3 h-3" />
                             </div>
                           </div>
-                        </article>
-                      </Link>
-                    );
-                  })
+                        </div>
+                      </article>
+                    </Link>
+                  ))
                 ) : (
                   <div className="flex flex-col items-center justify-center py-24 border border-dashed border-slate-300 dark:border-white/10 rounded-xl bg-slate-50 dark:bg-white/5">
                     <div className="w-16 h-16 bg-slate-200 dark:bg-neutral-800 rounded-full flex items-center justify-center mb-4">
@@ -283,7 +334,6 @@ export function BlogFeedSection() {
                 )}
               </div>
 
-              {/* View All Button */}
               {displayPosts.length > 0 && (
                 <div className="pt-12 flex justify-center">
                   <Link

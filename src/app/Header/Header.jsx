@@ -50,10 +50,7 @@ export default function Header({ className }) {
         isVisible ? "translate-y-0" : "-translate-y-full"
       } ${className}`}
     >
-      <div
-        className="absolute inset-0 bg-orange-500"
-        aria-hidden="true"
-      />
+      <div className="absolute inset-0 bg-orange-500" aria-hidden="true" />
 
       {/* Actual header content */}
       <div className="relative">

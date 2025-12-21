@@ -5,65 +5,30 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Flame } from "lucide-react";
 
-const leftSlides = [
-  {
-    id: 1,
-    category: "Technology",
-    title: "Emerging tech trends that will define the next decade",
-    author: "Dana Cotton",
-    date: "April 10, 2024",
-    image:
-      "https://images.unsplash.com/photo-1716436329836-208bea5a55e6?q=80&w=1228&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 2,
-    category: "Business",
-    title: "Renewable energy startups attract major investments",
-    author: "Finlay Rees",
-    date: "April 10, 2024",
-    image:
-      "https://images.unsplash.com/photo-1663702610675-a13c95299b29?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 3,
-    category: "Cyber",
-    title: "Quantum encryption races: what changes in 2026",
-    author: "S. Gupta",
-    date: "Sep 15, 2025",
-    image:
-      "https://images.unsplash.com/photo-1740477959006-798042a324aa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 4,
-    category: "Naval",
-    title: "Carrier groups and ISR: the new baseline",
-    author: "R. Sharma",
-    date: "Sep 14, 2025",
-    image:
-      "https://images.unsplash.com/photo-1737735511362-bc20cd3591bc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
+// Map WP post -> card data
+function mapPostToCard(post) {
+  const title = post?.title?.rendered || "Untitled";
 
-const rightTopCards = [
-  {
-    id: 101,
-    category: "Briefing",
-    title: "Emerging tech startups to watch in the upcoming year",
-    author: "Kiera Hunt",
-    date: "April 10, 2024",
-    image:
-      "https://images.unsplash.com/photo-1581934952711-2fc9c6521e7b?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 102,
-    category: "Markets",
-    title: "Real estate market adapts to the surge in remote working demands",
-    author: "Dana Cotton",
-    date: "April 10, 2024",
-    image:
-      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
+  const date = new Date(post.date).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
+  const image =
+    post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+    "/fallback-image.jpg";
+
+  return {
+    id: post.id,
+    slug: post.slug,
+    category: "Trending",
+    title,
+    author: "MilitaryMatters247",
+    date,
+    image,
+  };
+}
 
 // Desktop accordion card
 function DesktopAccordionCard({ item, index, activeIndex, setActiveIndex }) {
@@ -71,7 +36,7 @@ function DesktopAccordionCard({ item, index, activeIndex, setActiveIndex }) {
 
   return (
     <Link
-      href={`/news/${item.id}`}
+      href={`/news/${item.slug}`}
       onMouseEnter={() => setActiveIndex(index)}
       onFocus={() => setActiveIndex(index)}
       className={[
@@ -99,7 +64,7 @@ function DesktopAccordionCard({ item, index, activeIndex, setActiveIndex }) {
       {/* Darken on hover */}
       <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-700 group-hover:bg-black/25 group-focus-within:bg-black/25" />
 
-      {/* Content: only active card, with 0.3s delay when entering */}
+      {/* Content */}
       <div
         className={[
           "absolute inset-0 z-10 flex flex-col justify-end p-6 text-white",
@@ -136,12 +101,14 @@ function DesktopAccordionCard({ item, index, activeIndex, setActiveIndex }) {
 }
 
 // Main section
-export function TrendingNowSection() {
+export function TrendingNowSection({ posts = [] }) {
   const items = useMemo(
-    () => [...leftSlides, ...rightTopCards].slice(0, 6),
-    []
+    () => (posts || []).map(mapPostToCard).slice(0, 6),
+    [posts]
   );
   const [activeIndex, setActiveIndex] = useState(0);
+
+  if (!items.length) return null;
 
   return (
     <section className="relative overflow-hidden border-t border-slate-200 bg-transparent py-14 dark:border-white/5">
@@ -194,7 +161,7 @@ export function TrendingNowSection() {
           {items.map((item, index) => (
             <Link
               key={item.id}
-              href={`/news/${item.id}`}
+              href={`/news/${item.slug}`}
               className="group block"
             >
               <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-black/5 dark:border-white/10 dark:bg-neutral-900">

@@ -208,10 +208,6 @@
   padding-left: 100%;
 }
 
-.background-gradient-white {
-  @apply bg-gradient-to-b from-white to-slate-100 shadow-md dark:bg-neutral-900 dark:bg-none;
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -243,5 +239,11 @@
     body {
       background-attachment: scroll;
     }
+  }
+}
+
+@layer components {
+  .background-gradient-white {
+    @apply bg-gradient-to-b from-white to-slate-100 shadow-md dark:bg-neutral-900 dark:bg-none;
   }
 }

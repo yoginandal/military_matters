@@ -54,7 +54,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-slate-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
+    <footer className="relative overflow-hidden border-t border-slate-200 dark:border-neutral-800 background-gradient-white dark:bg-neutral-900">
       <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-8 text-slate-900 dark:text-white sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-y-12 gap-x-10 md:grid-cols-2 lg:grid-cols-12 pb-12">
           {/* Logo + mission + social */}

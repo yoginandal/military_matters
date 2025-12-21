@@ -1,86 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ArrowRight, Clock, ChevronRight, Target } from "lucide-react";
 
-// Mock Data: 6 Latest Blogs (all with Unsplash images)
-const blogs = [
-  {
-    id: 1,
-    title: "Agni-V Test Firing: Strategic Implications",
-    category: "Missile Tech",
-    date: "2 Hours Ago",
-    image:
-      "https://images.unsplash.com/photo-1748653755322-30fe8248803c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "Analysis of the latest MIRV technology demonstration and what it means for regional deterrence stability.",
-  },
-  {
-    id: 2,
-    title: "Indian Navy's New Carrier Battle Group",
-    category: "Naval Power",
-    date: "5 Hours Ago",
-    image:
-      "https://images.unsplash.com/photo-1542876975-6334b6aeb70d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "INS Vikrant leads the largest naval exercise in the Arabian Sea with dual-carrier operations.",
-  },
-  {
-    id: 3,
-    title: "LCA Tejas Mk2: Production Timeline Update",
-    category: "Air Force",
-    date: "1 Day Ago",
-    image:
-      "https://images.unsplash.com/photo-1629793168399-1b028d0df502?q=80&w=1124&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "HAL confirms the rollout schedule for the new medium-weight fighter jet prototype.",
-  },
-  {
-    id: 4,
-    title: "Border Infrastructure Push in Ladakh",
-    category: "Land Forces",
-    date: "1 Day Ago",
-    image:
-      "https://images.unsplash.com/photo-1605588649874-94991ea8316f?q=80&w=1056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "BRO completes strategic tunnel providing all-weather connectivity to forward areas.",
-  },
-  {
-    id: 5,
-    title: "Cyber Warfare Command Structure",
-    category: "Cyber & EW",
-    date: "2 Days Ago",
-    image:
-      "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=1600&q=80",
-    excerpt:
-      "New organizational changes announced to bolster defense against state-sponsored cyber attacks.",
-  },
-  {
-    id: 6,
-    title: "Indigenous Drone Swarm Capabilities",
-    category: "Future Tech",
-    date: "3 Days Ago",
-    image:
-      "https://plus.unsplash.com/premium_photo-1661875342092-33c91bdf33c1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "Private sector collaboration yields first successful test of autonomous swarming munition systems.",
-  },
-];
+// Map WP post -> blog card
+function mapPostToBlog(post) {
+  const title = post?.title?.rendered || "Untitled";
+  const excerptText = post?.excerpt?.rendered?.replace(/<[^>]+>/g, "") || ""; // strip HTML
 
-export function LatestBriefingsSection() {
-  const [activeId, setActiveId] = useState(blogs[0].id);
+  const dateObj = new Date(post.date);
+  const date = dateObj.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
-  const activeBlog = blogs.find((b) => b.id === activeId) || blogs[0];
+  const image =
+    post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+    "/fallback-image.jpg";
+
+  return {
+    id: post.id,
+    title,
+    category: "Latest Briefing",
+    date,
+    image,
+    excerpt: excerptText,
+  };
+}
+
+export function LatestBriefingsSection({ posts = [] }) {
+  const blogs = useMemo(() => posts.map(mapPostToBlog).slice(0, 6), [posts]);
+
+  const [activeId, setActiveId] = useState(
+    blogs.length > 0 ? blogs[0].id : null
+  );
+
+  const activeBlog = blogs.find((b) => b.id === activeId) || blogs[0] || null;
+
   const leftSideBlogs = blogs.slice(0, 3);
   const rightSideBlogs = blogs.slice(3, 6);
 
+  if (!activeBlog) {
+    return null; // nothing to show yet
+  }
+
   return (
     <section className="relative overflow-hidden border-t border-slate-200 bg-white py-14 lg:pt-12 lg:pb-28 dark:border-white/5 dark:bg-neutral-950">
-      {/* Clean background for readability */}
       <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-white to-slate-50 dark:from-neutral-950 dark:to-neutral-950" />
 
-      {/* Ultra-subtle grid */}
       <div
         className="
           pointer-events-none absolute inset-0 z-0
@@ -90,7 +59,6 @@ export function LatestBriefingsSection() {
         "
       />
 
-      {/* Left glow */}
       <div className="pointer-events-none absolute top-1/2 left-0 z-0 h-[520px] w-[520px] -translate-y-1/2 rounded-full bg-blue-600/8 blur-3xl dark:bg-blue-600/5" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4">
@@ -144,7 +112,6 @@ export function LatestBriefingsSection() {
                   />
                 </div>
 
-                {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent dark:from-black dark:via-neutral-950/60" />
               </div>
 
@@ -176,7 +143,6 @@ export function LatestBriefingsSection() {
                 </div>
               </div>
 
-              {/* Decorative icon */}
               <div className="absolute right-4 top-4 z-10">
                 <Target className="h-6 w-6 text-slate-500/50 dark:text-white/20" />
               </div>
@@ -222,7 +188,6 @@ function SideTab({ blog, isActive, onClick }) {
           : "border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 dark:border-white/10 dark:bg-neutral-900/40 dark:hover:bg-neutral-900/70 dark:hover:border-white/15",
       ].join(" ")}
     >
-      {/* Thumbnail image (same image as hero) */}
       <div className="relative mb-3 h-28 w-full overflow-hidden rounded-lg bg-slate-200 dark:bg-neutral-800">
         <img
           src={blog.image}
@@ -232,7 +197,6 @@ function SideTab({ blog, isActive, onClick }) {
         />
       </div>
 
-      {/* Active indicator */}
       {isActive && (
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-orange-500" />
       )}

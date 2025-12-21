@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MapPin, Mail } from "lucide-react";
 import Drawer from "./Drawer";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SpaceIcon } from "lucide-react";
 
 export default function BannerNav() {
   return (
@@ -18,8 +19,8 @@ export default function BannerNav() {
           className="group rounded-lg focus:outline-none focus:ring-4 focus:ring-orange-400/60 focus:ring-offset-4 focus:ring-offset-white dark:focus:ring-offset-neutral-900"
           aria-label="Military Matters 24/7 - Home"
         >
-          <div className="rounded-lg bg-orange-500 p-1.5">
-            <Image
+          <div>
+            {/* <Image
               src="/logo.png"
               alt="Military Matters 24/7"
               width={88}
@@ -27,7 +28,10 @@ export default function BannerNav() {
               className="h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-110"
               priority
               quality={100}
-            />
+            /> */}
+            <span className="flex items-center gap-2.5 text-slate-700 dark:text-slate-100 hover:text-slate-900 dark:hover:text-white transition-colors duration-300 group">
+              Military Matters
+            </span>
           </div>
         </Link>
 
