@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   Clock,
@@ -258,11 +259,12 @@ export function BlogFeedSection({ posts = [], categories = [] }) {
                         {/* Thumbnail */}
                         <div className="md:col-span-5 relative aspect-video rounded-xl overflow-hidden bg-slate-200 dark:bg-neutral-800 border border-slate-300 dark:border-white/10 shadow-2xl">
                           {post.imageUrl ? (
-                            <img
+                            <Image
                               src={post.imageUrl}
                               alt={post.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                              loading="lazy"
+                              fill
+                              sizes="(min-width: 768px) 40vw, 100vw"
+                              className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                             />
                           ) : (
                             <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center text-slate-600">

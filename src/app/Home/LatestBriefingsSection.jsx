@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Clock, ChevronRight, Target } from "lucide-react";
 
 // Fallback hardcoded briefings (used when there aren't enough WordPress posts)
@@ -179,11 +180,13 @@ export function LatestBriefingsSection({ posts = [] }) {
                 className="absolute inset-0 animate-in fade-in duration-700"
               >
                 <div className="absolute inset-0">
-                  <img
+                  <Image
                     src={activeBlog.image}
                     alt={activeBlog.title}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover"
+                    priority
                   />
                 </div>
 
@@ -271,11 +274,12 @@ function SideTab({ blog, isActive, onClick }) {
       ].join(" ")}
     >
       <div className="relative mb-3 h-28 w-full overflow-hidden rounded-lg bg-slate-200 dark:bg-neutral-800">
-        <img
+        <Image
           src={blog.image}
           alt={blog.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
+          fill
+          sizes="(min-width: 1024px) 200px, 100vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
