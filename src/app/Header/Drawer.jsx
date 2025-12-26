@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/collapsible";
 import { Menu, ChevronRight } from "lucide-react";
 import { navlinks } from "@/data/navData";
+import { Logo } from "@/components/Logo";
 
 // This is a new, self-contained component for the collapsible items.
 const CollapsibleNavItem = ({ item }) => {
@@ -67,18 +68,8 @@ const Drawer = () => {
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col overflow-y-auto border-l-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 bg-[url('/noise.png')] text-slate-900 dark:text-white sm:w-96">
         <SheetHeader className="border-b border-slate-200 dark:border-white/10 pb-4">
-          <div className="mb-4 flex items-center gap-4">
-            <Image
-              src="/logo.png"
-              alt="Military Matters 24/7"
-              width={64}
-              height={64}
-              className="h-16 w-16 object-contain"
-              priority
-            />
-            <SheetTitle className="text-2xl font-bold text-slate-900 dark:text-white">
-              Military Matters 24/7
-            </SheetTitle>
+          <div className="mb-4">
+            <Logo variant="large" asLink={false} />
           </div>
         </SheetHeader>
         <div className="flex-1 py-6">

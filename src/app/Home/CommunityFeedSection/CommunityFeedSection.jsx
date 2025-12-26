@@ -1,11 +1,12 @@
 "use client";
 
-import { ArticleCard } from "./ArticleCard"; // Adjust path as needed
-import { ProfileCard } from "./ProfileCard"; // Adjust path as needed
-import { PopularPostsWidget } from "./PopularPostsWidget"; // Adjust path as needed
+import { useMemo } from "react";
+import { ArticleCard } from "./ArticleCard";
+import { ProfileCard } from "./ProfileCard";
+import { PopularPostsWidget } from "./PopularPostsWidget";
 
-// Sample Data
-const articles = [
+// Fallback hardcoded articles (used when there aren't enough WordPress posts)
+const fallbackArticles = [
   {
     id: 1,
     category: "CYBER INTEL",
@@ -16,6 +17,7 @@ const articles = [
     likes: 42,
     views: "856",
     color: "bg-blue-500",
+    slug: null, // Not a real post
   },
   {
     id: 2,
@@ -27,6 +29,7 @@ const articles = [
     likes: 128,
     views: "1.2k",
     color: "bg-emerald-500",
+    slug: null,
   },
   {
     id: 3,
@@ -38,6 +41,7 @@ const articles = [
     likes: 67,
     views: "543",
     color: "bg-purple-500",
+    slug: null,
   },
   {
     id: 4,
@@ -49,10 +53,82 @@ const articles = [
     likes: 215,
     views: "2.1k",
     color: "bg-rose-500",
+    slug: null,
   },
 ];
 
-export function CommunityFeedSection() {
+// Map WordPress post to article format
+function mapWpPostToArticle(post, categoriesById) {
+  const title = post?.title?.rendered || "Untitled";
+  const image =
+    post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+    "/fallback-image.jpg";
+  
+  const categoryId = post.categories?.[0];
+  const category = categoryId ? categoriesById[categoryId] : null;
+  const categoryName = category?.name?.toUpperCase() || "INTEL";
+
+  const date = new Date(post.date);
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).toUpperCase();
+
+  // Color mapping based on category slug or default
+  const colorMap = {
+    "cyber-intel": "bg-blue-500",
+    "field-ops": "bg-emerald-500",
+    strategy: "bg-purple-500",
+    weaponry: "bg-rose-500",
+  };
+  const categorySlug = category?.slug || "";
+  const color = colorMap[categorySlug] || "bg-orange-500";
+
+  // Generate random likes/views for now (or you could add these as custom fields in WordPress)
+  const likes = Math.floor(Math.random() * 200) + 20;
+  const views = likes > 100 ? `${(likes * 8).toLocaleString()}` : `${likes * 10}`;
+
+  return {
+    id: post.id,
+    slug: post.slug,
+    category: categoryName,
+    date: formattedDate,
+    title,
+    image,
+    likes,
+    views,
+    color,
+  };
+}
+
+export function CommunityFeedSection({ posts = [], categories = [] }) {
+  // Map categories by ID for quick lookup
+  const categoriesById = useMemo(() => {
+    const map = {};
+    categories.forEach((cat) => {
+      map[cat.id] = cat;
+    });
+    return map;
+  }, [categories]);
+
+  // Map WordPress posts to article format
+  const dynamicArticles = useMemo(() => {
+    return posts.map((post) => mapWpPostToArticle(post, categoriesById));
+  }, [posts, categoriesById]);
+
+  // Merge dynamic posts with fallback articles
+  // Priority: Dynamic posts first, then fill remaining slots with fallback
+  const displayArticles = useMemo(() => {
+    const maxArticles = 4;
+    const dynamicCount = dynamicArticles.length;
+    const fallbackCount = Math.max(0, maxArticles - dynamicCount);
+    
+    return [
+      ...dynamicArticles.slice(0, maxArticles),
+      ...fallbackArticles.slice(0, fallbackCount),
+    ];
+  }, [dynamicArticles]);
   return (
     <section className="relative overflow-hidden border-t border-slate-200 bg-white py-16 dark:border-white/5 dark:bg-[#0a0a0a] font-sans">
       {/* Subtle background to match other sections */}
@@ -77,7 +153,7 @@ export function CommunityFeedSection() {
           {/* LEFT CONTENT: Main Feed */}
           <div className="lg:col-span-8">
             <div className="grid gap-6 md:grid-cols-2">
-              {articles.map((post) => (
+              {displayArticles.map((post) => (
                 <ArticleCard key={post.id} post={post} />
               ))}
             </div>

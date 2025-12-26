@@ -1,10 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { ThumbsUp, Eye, Share2 } from "lucide-react";
 import Image from "next/image";
 
 export function ArticleCard({ post }) {
-  return (
+  const CardContent = (
     <div className="group bg-white dark:bg-neutral-900 border-2 border-slate-300 dark:border-white/10 rounded-2xl p-4 flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#f97316] hover:border-orange-500 h-full">
       {/* Image Area */}
       <div className="aspect-[4/3] bg-slate-200 dark:bg-neutral-800 rounded-xl border border-slate-300 dark:border-white/5 overflow-hidden mb-5 relative">
@@ -50,10 +51,28 @@ export function ArticleCard({ post }) {
             <Eye className="w-3 h-3" /> {post.views}
           </div>
         </div>
-        <button className="p-2 rounded-full border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-colors">
+        <button 
+          className="p-2 rounded-full border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-colors"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Share functionality can be added here
+          }}
+        >
           <Share2 className="w-4 h-4" />
         </button>
       </div>
     </div>
   );
+
+  // If post has a slug, wrap in Link; otherwise just return the card
+  if (post.slug) {
+    return (
+      <Link href={`/news/${post.slug}`} className="block h-full">
+        {CardContent}
+      </Link>
+    );
+  }
+
+  return CardContent;
 }

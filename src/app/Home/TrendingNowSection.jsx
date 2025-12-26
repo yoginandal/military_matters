@@ -5,6 +5,64 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Flame } from "lucide-react";
 
+// Fallback hardcoded trending posts (used when there aren't enough WordPress posts)
+const fallbackTrending = [
+  {
+    id: 2001,
+    slug: null,
+    category: "Trending",
+    title: "Hypersonic Weapons: The Race for Speed",
+    author: "MilitaryMatters247",
+    date: "28 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    id: 2002,
+    slug: null,
+    category: "Trending",
+    title: "Quantum Computing in Military Applications",
+    author: "MilitaryMatters247",
+    date: "27 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    id: 2003,
+    slug: null,
+    category: "Trending",
+    title: "Drone Swarms: The Future of Aerial Warfare",
+    author: "MilitaryMatters247",
+    date: "26 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    id: 2004,
+    slug: null,
+    category: "Trending",
+    title: "Special Operations: Tactical Evolution",
+    author: "MilitaryMatters247",
+    date: "25 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    id: 2005,
+    slug: null,
+    category: "Trending",
+    title: "Electronic Warfare: Invisible Battlefields",
+    author: "MilitaryMatters247",
+    date: "24 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    id: 2006,
+    slug: null,
+    category: "Trending",
+    title: "Maritime Security: Protecting Global Trade Routes",
+    author: "MilitaryMatters247",
+    date: "23 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?q=80&w=1000&auto=format&fit=crop",
+  },
+];
+
 // Map WP post -> card data
 function mapPostToCard(post) {
   const title = post?.title?.rendered || "Untitled";
@@ -34,19 +92,18 @@ function mapPostToCard(post) {
 function DesktopAccordionCard({ item, index, activeIndex, setActiveIndex }) {
   const active = index === activeIndex;
 
-  return (
-    <Link
-      href={`/news/${item.slug}`}
+  const baseCardClasses = [
+    "group relative h-[420px] overflow-hidden rounded-2xl border",
+    "border-slate-200 bg-slate-200 shadow-xl shadow-black/5",
+    "dark:border-white/10 dark:bg-neutral-900",
+    item.slug ? "cursor-pointer focus:outline-none focus:ring-4 focus:ring-orange-400/30" : "cursor-default",
+  ].join(" ");
+
+  const cardContent = (
+    <div
       onMouseEnter={() => setActiveIndex(index)}
       onFocus={() => setActiveIndex(index)}
-      className={[
-        "group relative h-[420px] overflow-hidden rounded-2xl border",
-        "border-slate-200 bg-slate-200 shadow-xl shadow-black/5",
-        "dark:border-white/10 dark:bg-neutral-900",
-        "transition-[flex] duration-700 ease-[cubic-bezier(.5,.85,.25,1.15)]",
-        active ? "flex-[3]" : "flex-[1]",
-        "focus:outline-none focus:ring-4 focus:ring-orange-400/30",
-      ].join(" ")}
+      className={baseCardClasses}
       aria-label={item.title}
     >
       {/* Image */}
@@ -96,16 +153,53 @@ function DesktopAccordionCard({ item, index, activeIndex, setActiveIndex }) {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
+  );
+
+  // If slug exists, wrap in Link with flex properties; otherwise return as div with flex properties
+  const flexClasses = [
+    "transition-[flex] duration-700 ease-[cubic-bezier(.5,.85,.25,1.15)]",
+    active ? "flex-[3]" : "flex-[1]",
+  ].join(" ");
+
+  if (item.slug) {
+    return (
+      <Link
+        href={`/news/${item.slug}`}
+        className={flexClasses}
+      >
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <div className={flexClasses}>
+      {cardContent}
+    </div>
   );
 }
 
 // Main section
 export function TrendingNowSection({ posts = [] }) {
-  const items = useMemo(
-    () => (posts || []).map(mapPostToCard).slice(0, 6),
-    [posts]
-  );
+  // Map WordPress posts to card format
+  const dynamicItems = useMemo(() => {
+    return (posts || []).map(mapPostToCard);
+  }, [posts]);
+
+  // Merge dynamic posts with fallback trending
+  // Priority: Dynamic posts first, then fill remaining slots with fallback
+  const items = useMemo(() => {
+    const maxItems = 6;
+    const dynamicCount = dynamicItems.length;
+    const fallbackCount = Math.max(0, maxItems - dynamicCount);
+    
+    return [
+      ...dynamicItems.slice(0, maxItems),
+      ...fallbackTrending.slice(0, fallbackCount),
+    ];
+  }, [dynamicItems]);
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   if (!items.length) return null;
@@ -158,20 +252,16 @@ export function TrendingNowSection({ posts = [] }) {
 
         {/* Mobile: stacked */}
         <div className="grid gap-6 lg:hidden">
-          {items.map((item, index) => (
-            <Link
-              key={item.id}
-              href={`/news/${item.slug}`}
-              className="group block"
-            >
-              <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-black/5 dark:border-white/10 dark:bg-neutral-900">
+          {items.map((item, index) => {
+            const articleContent = (
+              <article className={`overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-black/5 dark:border-white/10 dark:bg-neutral-900 ${item.slug ? 'group' : ''}`}>
                 <div className="relative h-60 bg-slate-200 dark:bg-neutral-800 overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
                     sizes="100vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className={`object-cover transition-transform duration-700 ${item.slug ? 'group-hover:scale-105' : ''}`}
                     priority={index === 0}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
@@ -181,8 +271,8 @@ export function TrendingNowSection({ posts = [] }) {
                 </div>
 
                 <div className="border-t border-slate-200 p-5 dark:border-white/10">
-                  <div className="opacity-0 translate-y-1 transition-all duration-700 group-hover:opacity-100 group-hover:translate-y-0">
-                    <h3 className="text-lg font-extrabold leading-snug text-slate-900 transition-colors group-hover:text-orange-600 dark:text-white dark:group-hover:text-orange-400">
+                  <div className={`opacity-0 translate-y-1 transition-all duration-700 ${item.slug ? 'group-hover:opacity-100 group-hover:translate-y-0' : 'opacity-100 translate-y-0'}`}>
+                    <h3 className={`text-lg font-extrabold leading-snug text-slate-900 transition-colors dark:text-white ${item.slug ? 'group-hover:text-orange-600 dark:group-hover:text-orange-400' : ''}`}>
                       {item.title}
                     </h3>
 
@@ -198,8 +288,26 @@ export function TrendingNowSection({ posts = [] }) {
                   </div>
                 </div>
               </article>
-            </Link>
-          ))}
+            );
+
+            if (item.slug) {
+              return (
+                <Link
+                  key={item.id}
+                  href={`/news/${item.slug}`}
+                  className="block"
+                >
+                  {articleContent}
+                </Link>
+              );
+            }
+
+            return (
+              <div key={item.id} className="block">
+                {articleContent}
+              </div>
+            );
+          })}
 
           <Link
             href="/news"

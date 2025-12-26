@@ -4,6 +4,64 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ArrowRight, Clock, ChevronRight, Target } from "lucide-react";
 
+// Fallback hardcoded briefings (used when there aren't enough WordPress posts)
+const fallbackBriefings = [
+  {
+    id: 1001,
+    slug: null,
+    title: "Strategic Defense Initiative: Next-Gen Missile Defense Systems",
+    category: "Latest Briefing",
+    date: "28 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop",
+    excerpt: "Analysis of emerging missile defense technologies and their strategic implications for global security architecture.",
+  },
+  {
+    id: 1002,
+    slug: null,
+    title: "Cybersecurity Threats in Critical Infrastructure",
+    category: "Latest Briefing",
+    date: "27 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop",
+    excerpt: "Comprehensive assessment of cyber vulnerabilities in national infrastructure and recommended countermeasures.",
+  },
+  {
+    id: 1003,
+    slug: null,
+    title: "Arctic Operations: New Frontiers in Military Strategy",
+    category: "Latest Briefing",
+    date: "26 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop",
+    excerpt: "Examining the strategic importance of Arctic regions and evolving military capabilities in extreme environments.",
+  },
+  {
+    id: 1004,
+    slug: null,
+    title: "AI Integration in Modern Warfare",
+    category: "Latest Briefing",
+    date: "25 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1000&auto=format&fit=crop",
+    excerpt: "Exploring artificial intelligence applications in defense systems and ethical considerations for autonomous weapons.",
+  },
+  {
+    id: 1005,
+    slug: null,
+    title: "Naval Power Projection in the Indo-Pacific",
+    category: "Latest Briefing",
+    date: "24 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?q=80&w=1000&auto=format&fit=crop",
+    excerpt: "Strategic analysis of naval capabilities and maritime security dynamics across the Indo-Pacific region.",
+  },
+  {
+    id: 1006,
+    slug: null,
+    title: "Space-Based Defense Systems: The New Frontier",
+    category: "Latest Briefing",
+    date: "23 Sep, 2025",
+    image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?q=80&w=1000&auto=format&fit=crop",
+    excerpt: "Review of space defense initiatives and the militarization of orbital domains in contemporary geopolitics.",
+  },
+];
+
 // Map WP post -> blog card
 function mapPostToBlog(post) {
   const title = post?.title?.rendered || "Untitled";
@@ -32,7 +90,23 @@ function mapPostToBlog(post) {
 }
 
 export function LatestBriefingsSection({ posts = [] }) {
-  const blogs = useMemo(() => posts.map(mapPostToBlog).slice(0, 6), [posts]);
+  // Map WordPress posts to blog format
+  const dynamicBlogs = useMemo(() => {
+    return posts.map(mapPostToBlog);
+  }, [posts]);
+
+  // Merge dynamic posts with fallback briefings
+  // Priority: Dynamic posts first, then fill remaining slots with fallback
+  const blogs = useMemo(() => {
+    const maxBlogs = 6;
+    const dynamicCount = dynamicBlogs.length;
+    const fallbackCount = Math.max(0, maxBlogs - dynamicCount);
+    
+    return [
+      ...dynamicBlogs.slice(0, maxBlogs),
+      ...fallbackBriefings.slice(0, fallbackCount),
+    ];
+  }, [dynamicBlogs]);
 
   const [activeId, setActiveId] = useState(
     blogs.length > 0 ? blogs[0].id : null
@@ -134,13 +208,20 @@ export function LatestBriefingsSection({ posts = [] }) {
                     {activeBlog.excerpt}
                   </p>
 
-                  <Link
-                    href={`/news/${activeBlog.slug}`}
-                    className="inline-flex items-center gap-3 rounded-lg bg-white px-6 py-3 font-bold text-slate-900 transition-all duration-300 hover:bg-orange-600 hover:text-white dark:bg-white dark:text-neutral-900"
-                  >
-                    Read Full Briefing
-                    <ArrowRight className="h-5 w-5" />
-                  </Link>
+                  {activeBlog.slug ? (
+                    <Link
+                      href={`/news/${activeBlog.slug}`}
+                      className="inline-flex items-center gap-3 rounded-lg bg-white px-6 py-3 font-bold text-slate-900 transition-all duration-300 hover:bg-orange-600 hover:text-white dark:bg-white dark:text-neutral-900"
+                    >
+                      Read Full Briefing
+                      <ArrowRight className="h-5 w-5" />
+                    </Link>
+                  ) : (
+                    <div className="inline-flex items-center gap-3 rounded-lg bg-white px-6 py-3 font-bold text-slate-900 dark:bg-white dark:text-neutral-900 opacity-75 cursor-not-allowed">
+                      Read Full Briefing
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                  )}
                 </div>
               </div>
 

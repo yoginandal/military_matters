@@ -31,7 +31,7 @@ const TopBar = () => {
                   rel="noopener noreferrer"
                   aria-label={item.label}
                   role="listitem"
-                  className="p-2 rounded-full text-slate-100 transition-all duration-300 hover:text-orange-500  hover:bg-slate-100 "
+                  className="p-2 rounded-full text-slate-100 transition-all duration-300 hover:text-blue-500  hover:bg-slate-100 "
                 >
                   <item.icon className="w-5 h-5" aria-hidden="true" />
                 </a>
@@ -48,7 +48,7 @@ const TopBar = () => {
         >
           <div className="flex items-center gap-4 bg-slate-100 dark:bg-black/20 px-4 py-2 rounded-full border border-slate-300 dark:border-white/10 shadow-inner w-full">
             <div
-              className="h-2.5 w-2.5 bg-orange-500 dark:bg-amber-400 rounded-full animate-pulse shadow-[0_0_8px_theme('colors.orange.500')] dark:shadow-[0_0_8px_theme('colors.amber.400')]"
+              className="h-2.5 w-2.5 bg-blue-500 dark:bg-blue-400 rounded-full animate-pulse shadow-[0_0_8px_theme('colors.blue.500')] dark:shadow-[0_0_8px_theme('colors.blue.400')]"
               aria-hidden="true"
             ></div>
             <div className="overflow-hidden relative h-6 flex-1">

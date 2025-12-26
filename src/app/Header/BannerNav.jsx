@@ -6,6 +6,7 @@ import { MapPin, Mail } from "lucide-react";
 import Drawer from "./Drawer";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SpaceIcon } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 export default function BannerNav() {
   return (
@@ -14,26 +15,7 @@ export default function BannerNav() {
       aria-label="Main navigation"
     >
       <div className="container mx-auto flex justify-between items-center">
-        <Link
-          href="/"
-          className="group rounded-lg focus:outline-none focus:ring-4 focus:ring-orange-400/60 focus:ring-offset-4 focus:ring-offset-white dark:focus:ring-offset-neutral-900"
-          aria-label="Military Matters 24/7 - Home"
-        >
-          <div>
-            {/* <Image
-              src="/logo.png"
-              alt="Military Matters 24/7"
-              width={88}
-              height={88}
-              className="h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-110"
-              priority
-              quality={100}
-            /> */}
-            <span className="flex items-center gap-2.5 text-slate-700 dark:text-slate-100 hover:text-slate-900 dark:hover:text-white transition-colors duration-300 group">
-              Military Matters
-            </span>
-          </div>
-        </Link>
+        <Logo variant="default" />
 
         <div className="flex items-center gap-6 text-slate-900 dark:text-white">
           <div className="hidden lg:flex items-center space-x-6 font-semibold">
@@ -43,7 +25,7 @@ export default function BannerNav() {
             >
               <MapPin
                 size={20}
-                className="text-orange-500 group-hover:text-orange-400 transition-colors"
+                className="text-blue-500 group-hover:text-blue-400 transition-colors"
                 aria-hidden="true"
               />
               <span>New Delhi, India</span>
@@ -54,7 +36,7 @@ export default function BannerNav() {
             >
               <Mail
                 size={20}
-                className="text-orange-500 group-hover:text-orange-400 transition-colors"
+                className="text-blue-500 group-hover:text-blue-400 transition-colors"
                 aria-hidden="true"
               />
               <span>info@militarymatters.com</span>

@@ -22,6 +22,50 @@ function formatRelativeDate(dateString) {
   return date.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 }
 
+// Fallback hardcoded hero slides (used when there aren't enough WordPress posts)
+const fallbackHeroSlides = [
+  {
+    id: 3001,
+    slug: null,
+    src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop",
+    alt: "Strategic Defense Initiative: Next-Gen Missile Defense Systems",
+    badge: "Defense",
+    excerpt:
+      "Analysis of emerging missile defense technologies and their strategic implications for global security architecture.",
+    date: "2 Hours Ago",
+  },
+  {
+    id: 3002,
+    slug: null,
+    src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop",
+    alt: "Cybersecurity Threats in Critical Infrastructure",
+    badge: "Cyber Intel",
+    excerpt:
+      "Comprehensive assessment of cyber vulnerabilities in national infrastructure and recommended countermeasures.",
+    date: "5 Hours Ago",
+  },
+  {
+    id: 3003,
+    slug: null,
+    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop",
+    alt: "Arctic Operations: New Frontiers in Military Strategy",
+    badge: "Strategy",
+    excerpt:
+      "Examining the strategic importance of Arctic regions and evolving military capabilities in extreme environments.",
+    date: "1 Day Ago",
+  },
+  {
+    id: 3004,
+    slug: null,
+    src: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1000&auto=format&fit=crop",
+    alt: "AI Integration in Modern Warfare",
+    badge: "Technology",
+    excerpt:
+      "Exploring artificial intelligence applications in defense systems and ethical considerations for autonomous weapons.",
+    date: "2 Days Ago",
+  },
+];
+
 // Map WordPress post to hero slide format
 function mapPostToHeroSlide(post, categoriesById) {
   const title = post?.title?.rendered || "Untitled";
@@ -82,11 +126,24 @@ export function HeroSection({ posts = [], categories = [] }) {
     return map;
   }, [categories]);
 
-  // Build hero slides from WordPress posts
-  const heroSlides = useMemo(() => {
+  // Map WordPress posts to hero slide format
+  const dynamicHeroSlides = useMemo(() => {
     if (!posts || posts.length === 0) return [];
-    return posts.slice(0, 4).map((post) => mapPostToHeroSlide(post, categoriesById));
+    return posts.map((post) => mapPostToHeroSlide(post, categoriesById));
   }, [posts, categoriesById]);
+
+  // Merge dynamic posts with fallback hero slides
+  // Priority: Dynamic posts first, then fill remaining slots with fallback
+  const heroSlides = useMemo(() => {
+    const maxSlides = 4;
+    const dynamicCount = dynamicHeroSlides.length;
+    const fallbackCount = Math.max(0, maxSlides - dynamicCount);
+
+    return [
+      ...dynamicHeroSlides.slice(0, maxSlides),
+      ...fallbackHeroSlides.slice(0, fallbackCount),
+    ];
+  }, [dynamicHeroSlides]);
 
   // Update currentSlide when slides change
   useEffect(() => {
@@ -211,72 +268,136 @@ export function HeroSection({ posts = [], categories = [] }) {
 
           {/* RIGHT: Featured story from WordPress posts */}
           <div className="relative">
-            <Link
-              href={`/news/${active.slug}`}
-              className="group block overflow-hidden rounded-2xl border border-slate-300 bg-white/60 shadow-xl shadow-black/5 backdrop-blur-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5"
-            >
-              {/* overflow-hidden here keeps zoom inside the card */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-slate-200 dark:bg-neutral-800">
-                <Image
-                  src={active.src}
-                  alt={active.alt}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 560px, 100vw"
-                  className="object-cover transition-transform duration-400 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-4 left-4 rounded border border-white/10 bg-black/55 px-3 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
-                  {active.badge}
+            {active.slug ? (
+              <Link
+                href={`/news/${active.slug}`}
+                className="group block overflow-hidden rounded-2xl border border-slate-300 bg-white/60 shadow-xl shadow-black/5 backdrop-blur-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5"
+              >
+                {/* overflow-hidden here keeps zoom inside the card */}
+                <div className="relative aspect-[4/3] overflow-hidden bg-slate-200 dark:bg-neutral-800">
+                  <Image
+                    src={active.src}
+                    alt={active.alt}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 560px, 100vw"
+                    className="object-cover transition-transform duration-400 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 rounded border border-white/10 bg-black/55 px-3 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
+                    {active.badge}
+                  </div>
                 </div>
-              </div>
 
-              <div className="border-t border-slate-200 p-5 dark:border-white/10">
-                {/* keyed wrapper adds a short fade so text + image feel in sync */}
-                <div
-                  key={active.id}
-                  className="animate-in fade-in-0 duration-300"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                        Featured
+                <div className="border-t border-slate-200 p-5 dark:border-white/10">
+                  {/* keyed wrapper adds a short fade so text + image feel in sync */}
+                  <div
+                    key={active.id}
+                    className="animate-in fade-in-0 duration-300"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                          Featured
+                        </div>
+                        <h3 className="mt-2 line-clamp-2 text-lg font-extrabold leading-snug text-slate-900 dark:text-white">
+                          {active.alt}
+                        </h3>
+                        <p className="mt-2 line-clamp-2 text-sm text-slate-600 dark:text-slate-300">
+                          {active.excerpt ||
+                            "Tap to read the full briefing with context and key takeaways."}
+                        </p>
                       </div>
-                      <h3 className="mt-2 line-clamp-2 text-lg font-extrabold leading-snug text-slate-900 dark:text-white">
-                        {active.alt}
-                      </h3>
-                      <p className="mt-2 line-clamp-2 text-sm text-slate-600 dark:text-slate-300">
-                        {active.excerpt || "Tap to read the full briefing with context and key takeaways."}
-                      </p>
+
+                      <div className="mt-1 hidden rounded-full bg-orange-600 p-2 text-white shadow-lg lg:block">
+                        <ArrowRight className="h-4 w-4" />
+                      </div>
                     </div>
 
-                    <div className="mt-1 hidden rounded-full bg-orange-600 p-2 text-white shadow-lg lg:block">
-                      <ArrowRight className="h-4 w-4" />
+                    {/* Pager */}
+                    <div className="mt-5 flex items-center gap-2">
+                      {heroSlides.map((_, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => setCurrentSlide(i)}
+                          className={`h-1.5 rounded-full transition-all ${
+                            i === currentSlide
+                              ? "w-8 bg-orange-600 dark:bg-orange-500"
+                              : "w-2 bg-slate-300 hover:bg-slate-400 dark:bg-white/20 dark:hover:bg-white/35"
+                          }`}
+                          aria-label={`Show featured item ${i + 1}`}
+                        />
+                      ))}
                     </div>
                   </div>
+                </div>
+              </Link>
+            ) : (
+              <div className="group block overflow-hidden rounded-2xl border border-slate-300 bg-white/60 shadow-xl shadow-black/5 backdrop-blur-sm dark:border-white/10 dark:bg-white/5 opacity-75">
+                {/* overflow-hidden here keeps zoom inside the card */}
+                <div className="relative aspect-[4/3] overflow-hidden bg-slate-200 dark:bg-neutral-800">
+                  <Image
+                    src={active.src}
+                    alt={active.alt}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 560px, 100vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 rounded border border-white/10 bg-black/55 px-3 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
+                    {active.badge}
+                  </div>
+                </div>
 
-                  {/* Pager */}
-                  <div className="mt-5 flex items-center gap-2">
-                    {heroSlides.map((_, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => setCurrentSlide(i)}
-                        className={`h-1.5 rounded-full transition-all ${
-                          i === currentSlide
-                            ? "w-8 bg-orange-600 dark:bg-orange-500"
-                            : "w-2 bg-slate-300 hover:bg-slate-400 dark:bg-white/20 dark:hover:bg-white/35"
-                        }`}
-                        aria-label={`Show featured item ${i + 1}`}
-                      />
-                    ))}
+                <div className="border-t border-slate-200 p-5 dark:border-white/10">
+                  <div
+                    key={active.id}
+                    className="animate-in fade-in-0 duration-300"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                          Featured
+                        </div>
+                        <h3 className="mt-2 line-clamp-2 text-lg font-extrabold leading-snug text-slate-900 dark:text-white">
+                          {active.alt}
+                        </h3>
+                        <p className="mt-2 line-clamp-2 text-sm text-slate-600 dark:text-slate-300">
+                          {active.excerpt ||
+                            "Tap to read the full briefing with context and key takeaways."}
+                        </p>
+                      </div>
+
+                      <div className="mt-1 hidden rounded-full bg-orange-600 p-2 text-white shadow-lg lg:block">
+                        <ArrowRight className="h-4 w-4" />
+                      </div>
+                    </div>
+
+                    {/* Pager */}
+                    <div className="mt-5 flex items-center gap-2">
+                      {heroSlides.map((_, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => setCurrentSlide(i)}
+                          className={`h-1.5 rounded-full transition-all ${
+                            i === currentSlide
+                              ? "w-8 bg-orange-600 dark:bg-orange-500"
+                              : "w-2 bg-slate-300 hover:bg-slate-400 dark:bg-white/20 dark:hover:bg-white/35"
+                          }`}
+                          aria-label={`Show featured item ${i + 1}`}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            </Link>
+            )}
 
             {/* Small "latest analysis" card */}
-            {heroSlides.length > 1 && heroSlides[1] && (
+            {heroSlides.length > 1 && heroSlides[1] && heroSlides[1].slug && (
               <Link
                 href={`/news/${heroSlides[1].slug}`}
                 className="absolute -bottom-6 -left-6 z-20 hidden max-w-xs rounded-xl border border-slate-300 bg-white p-5 shadow-2xl transition hover:shadow-3xl dark:border-white/10 dark:bg-neutral-900 lg:block"

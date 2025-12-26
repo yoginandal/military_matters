@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import Image from "next/image";
+import { Logo } from "@/components/Logo";
 
 const logo = "/logo.png";
 
@@ -64,19 +65,7 @@ export default function Footer() {
               onClick={scrollToTop}
               className="group inline-flex items-center gap-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-orange-400/60 focus:ring-offset-4 focus:ring-offset-neutral-900"
             >
-              <div className="rounded-lg bg-orange-500 p-1.5">
-                <Image
-                  src={logo}
-                  alt="Military Matters 24/7"
-                  width={80}
-                  height={80}
-                  className="h-16 w-auto cursor-pointer transition-transform duration-300 group-hover:scale-110"
-                  priority
-                />
-              </div>
-              <span className="text-left text-lg font-bold tracking-wider text-slate-900 dark:text-white">
-                Military Matters 24/7
-              </span>
+              <Logo variant="default" asLink={false} />
             </button>
 
             <p className="max-w-md text-base leading-relaxed text-slate-600 dark:text-slate-300">
