@@ -30,7 +30,7 @@ export default async function Home() {
 
   return (
     <div>
-      <HeroSection />
+      <HeroSection posts={sorted.slice(0, 4)} categories={categories} />
       <LatestBriefingsSection posts={latestBriefingsPosts} />
       <TrendingNowSection posts={trendingPosts} />
       <CommunityFeedSection />

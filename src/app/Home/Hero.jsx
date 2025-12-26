@@ -6,91 +6,48 @@ import { ArrowRight, ShieldAlert } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import LightRays from "@/components/backgrounds/LightRays";
 
-// Same blogs array you pasted
-const blogs = [
-  {
-    id: 1,
-    title: "Agni-V Test Firing: Strategic Implications",
-    category: "Missile Tech",
-    date: "2 Hours Ago",
-    image:
-      "https://images.unsplash.com/photo-1748653755322-30fe8248803c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "Analysis of the latest MIRV technology demonstration and what it means for regional deterrence stability.",
-  },
-  {
-    id: 2,
-    title: "Indian Navy's New Carrier Battle Group",
-    category: "Naval Power",
-    date: "5 Hours Ago",
-    image:
-      "https://images.unsplash.com/photo-1542876975-6334b6aeb70d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "INS Vikrant leads the largest naval exercise in the Arabian Sea with dual-carrier operations.",
-  },
-  {
-    id: 3,
-    title: "LCA Tejas Mk2: Production Timeline Update",
-    category: "Air Force",
-    date: "1 Day Ago",
-    image:
-      "https://images.unsplash.com/photo-1629793168399-1b028d0df502?q=80&w=1124&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "HAL confirms the rollout schedule for the new medium-weight fighter jet prototype.",
-  },
-  {
-    id: 4,
-    title: "Border Infrastructure Push in Ladakh",
-    category: "Land Forces",
-    date: "1 Day Ago",
-    image:
-      "https://images.unsplash.com/photo-1605588649874-94991ea8316f?q=80&w=1056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "BRO completes strategic tunnel providing all-weather connectivity to forward areas.",
-  },
-  {
-    id: 5,
-    title: "Cyber Warfare Command Structure",
-    category: "Cyber & EW",
-    date: "2 Days Ago",
-    image:
-      "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=1600&q=80",
-    excerpt:
-      "New organizational changes announced to bolster defense against state-sponsored cyber attacks.",
-  },
-  {
-    id: 6,
-    title: "Indigenous Drone Swarm Capabilities",
-    category: "Future Tech",
-    date: "3 Days Ago",
-    image:
-      "https://plus.unsplash.com/premium_photo-1661875342092-33c91bdf33c1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    excerpt:
-      "Private sector collaboration yields first successful test of autonomous swarming munition systems.",
-  },
-];
+// Helper to format date relative to now
+function formatRelativeDate(dateString) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now - date;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
 
-// Build heroSlides from blogs so same images are reused
-const heroSlides = blogs.slice(0, 4).map((blog) => ({
-  id: blog.id,
-  src: blog.image,
-  alt: blog.title,
-  badge: blog.category,
-}));
+  if (diffMins < 60) return `${diffMins} Minutes Ago`;
+  if (diffHours < 24) return `${diffHours} Hours Ago`;
+  if (diffDays === 1) return "1 Day Ago";
+  if (diffDays < 7) return `${diffDays} Days Ago`;
+  return date.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+}
 
-export function HeroSection() {
+// Map WordPress post to hero slide format
+function mapPostToHeroSlide(post, categoriesById) {
+  const title = post?.title?.rendered || "Untitled";
+  const excerpt = post?.excerpt?.rendered?.replace(/<[^>]+>/g, "") || "";
+  const image =
+    post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+    "/fallback-image.jpg";
+  const categoryId = post.categories?.[0];
+  const category = categoryId ? categoriesById[categoryId] : null;
+  const categoryName = category?.name || "Briefing";
+
+  return {
+    id: post.id,
+    slug: post.slug,
+    src: image,
+    alt: title,
+    badge: categoryName,
+    excerpt: excerpt,
+    date: formatRelativeDate(post.date),
+  };
+}
+
+export function HeroSection({ posts = [], categories = [] }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isDark, setIsDark] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
-
-  // Auto slider (disabled for reduced-motion users)
-  useEffect(() => {
-    if (reduceMotion) return;
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [reduceMotion]);
 
   // Watch <html class="dark"> changes (Tailwind class strategy)
   useEffect(() => {
@@ -116,7 +73,43 @@ export function HeroSection() {
   const raysColor = useMemo(() => (isDark ? "#ffffff" : "#1a1a1a"), [isDark]);
   const saturation = useMemo(() => (isDark ? 1.0 : 0.12), [isDark]);
 
-  const active = heroSlides[currentSlide];
+  // Map categories by ID for quick lookup
+  const categoriesById = useMemo(() => {
+    const map = {};
+    categories.forEach((cat) => {
+      map[cat.id] = cat;
+    });
+    return map;
+  }, [categories]);
+
+  // Build hero slides from WordPress posts
+  const heroSlides = useMemo(() => {
+    if (!posts || posts.length === 0) return [];
+    return posts.slice(0, 4).map((post) => mapPostToHeroSlide(post, categoriesById));
+  }, [posts, categoriesById]);
+
+  // Update currentSlide when slides change
+  useEffect(() => {
+    if (heroSlides.length > 0 && currentSlide >= heroSlides.length) {
+      setCurrentSlide(0);
+    }
+  }, [heroSlides.length, currentSlide]);
+
+  // Auto slider (disabled for reduced-motion users)
+  useEffect(() => {
+    if (reduceMotion || heroSlides.length === 0) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [reduceMotion, heroSlides.length]);
+
+  const active = heroSlides.length > 0 ? heroSlides[currentSlide] : null;
+
+  // Don't render if no posts
+  if (!active || heroSlides.length === 0) {
+    return null;
+  }
 
   return (
     <section className="relative overflow-hidden background-gradient-white dark:bg-neutral-950">
@@ -191,7 +184,7 @@ export function HeroSection() {
             <div className="mt-10 flex gap-10 border-t border-slate-200 pt-8 dark:border-white/10">
               <div>
                 <div className="text-3xl font-bold text-slate-900 dark:text-white">
-                  500+
+                  {posts.length > 0 ? `${posts.length}+` : "500+"}
                 </div>
                 <div className="mt-1 text-sm text-slate-600 dark:text-slate-400">
                   Articles
@@ -216,10 +209,10 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* RIGHT: Featured story from heroSlides/blogs */}
+          {/* RIGHT: Featured story from WordPress posts */}
           <div className="relative">
             <Link
-              href={`/news/${active.id}`}
+              href={`/news/${active.slug}`}
               className="group block overflow-hidden rounded-2xl border border-slate-300 bg-white/60 shadow-xl shadow-black/5 backdrop-blur-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5"
             >
               {/* overflow-hidden here keeps zoom inside the card */}
@@ -253,8 +246,7 @@ export function HeroSection() {
                         {active.alt}
                       </h3>
                       <p className="mt-2 line-clamp-2 text-sm text-slate-600 dark:text-slate-300">
-                        Tap to read the full briefing with context and key
-                        takeaways.
+                        {active.excerpt || "Tap to read the full briefing with context and key takeaways."}
                       </p>
                     </div>
 
@@ -283,23 +275,27 @@ export function HeroSection() {
               </div>
             </Link>
 
-            {/* Small “latest analysis” card */}
-            <div className="absolute -bottom-6 -left-6 z-20 hidden max-w-xs rounded-xl border border-slate-300 bg-white p-5 shadow-2xl dark:border-white/10 dark:bg-neutral-900 lg:block">
-              <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-orange-500/10">
-                  <ShieldAlert className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+            {/* Small "latest analysis" card */}
+            {heroSlides.length > 1 && heroSlides[1] && (
+              <Link
+                href={`/news/${heroSlides[1].slug}`}
+                className="absolute -bottom-6 -left-6 z-20 hidden max-w-xs rounded-xl border border-slate-300 bg-white p-5 shadow-2xl transition hover:shadow-3xl dark:border-white/10 dark:bg-neutral-900 lg:block"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-orange-500/10">
+                    <ShieldAlert className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
+                      Latest analysis
+                    </h4>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-400 line-clamp-2">
+                      {heroSlides[1].alt}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
-                    Latest analysis
-                  </h4>
-                  <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
-                    New strategic briefing on Indo-Pacific security
-                    architecture.
-                  </p>
-                </div>
-              </div>
-            </div>
+              </Link>
+            )}
 
             <div className="absolute -top-3 -right-3 z-20 hidden rounded-full bg-orange-600 px-3 py-1.5 text-xs font-bold text-white shadow-lg lg:block">
               LIVE

@@ -22,6 +22,7 @@ function mapPostToBlog(post) {
 
   return {
     id: post.id,
+    slug: post.slug, // Extract slug from WordPress post
     title,
     category: "Latest Briefing",
     date,
@@ -134,7 +135,7 @@ export function LatestBriefingsSection({ posts = [] }) {
                   </p>
 
                   <Link
-                    href={`/news/${activeBlog.id}`}
+                    href={`/news/${activeBlog.slug}`}
                     className="inline-flex items-center gap-3 rounded-lg bg-white px-6 py-3 font-bold text-slate-900 transition-all duration-300 hover:bg-orange-600 hover:text-white dark:bg-white dark:text-neutral-900"
                   >
                     Read Full Briefing

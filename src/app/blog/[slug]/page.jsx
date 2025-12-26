@@ -24,8 +24,10 @@ const BlogBanner = ({ title, categoryId }) => {
   );
 };
 
-const BlogPostPage = ({ params }) => {
-  const rawSlug = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
+const BlogPostPage = async ({ params }) => {
+  // In Next.js 16, params is a Promise and must be awaited
+  const resolvedParams = await params;
+  const rawSlug = Array.isArray(resolvedParams?.slug) ? resolvedParams.slug[0] : resolvedParams?.slug;
   const post =
     BLOG_POSTS.find(
       (p) => p.slug.toLowerCase() === String(rawSlug || "").toLowerCase()
